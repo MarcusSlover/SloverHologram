@@ -1,0 +1,11 @@
+name: SloverHologram
+version: ${project.version}
+main: net.marcusslover.sloverhologram.SloverHologram
+authors: [MarcusSlover]
+description: A simple hologram plugin with good api.
+
+commands:
+  sloverhologram:
+    description: The main command of SloverHologram plugin.
+    aliases: [sh,sholo,sloverh]
+    permission: sloverhologram.use
