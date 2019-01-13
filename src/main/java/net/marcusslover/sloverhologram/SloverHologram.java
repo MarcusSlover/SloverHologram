@@ -13,6 +13,7 @@ import org.bukkit.Server;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,13 +32,19 @@ public final class SloverHologram extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.console.sendMessage(new Text(prefix+" &7Plugin was enabled").toString());
-        new Holograms(this);
-        this.loadCommand();
-        this.loadFiles();
-        this.loadHolograms();
-        this.server.getPluginManager().registerEvents(new Events(this), this);
-        hologramAPI = new SloverHologramAPI(this);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                SloverHologram main = SloverHologram.getPlugin(SloverHologram.class);
+                console.sendMessage(new Text(prefix+" &7Plugin was enabled").toString());
+                new Holograms(main);
+                loadCommand();
+                loadFiles();
+                server.getPluginManager().registerEvents(new Events(main), main);
+                hologramAPI = new SloverHologramAPI(main);
+                loadHolograms();
+            }
+        }.runTaskLater(this, 20*5L);
     }
 
     /**

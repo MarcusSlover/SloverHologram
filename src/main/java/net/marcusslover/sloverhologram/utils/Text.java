@@ -1,6 +1,7 @@
 package net.marcusslover.sloverhologram.utils;
 
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class Text implements Sendable {
@@ -24,6 +25,11 @@ public class Text implements Sendable {
 
     @Override
     public void send(Player player) {
+        player.sendMessage(toColor(string));
+    }
+
+    @Override
+    public void send(CommandSender player) {
         player.sendMessage(toColor(string));
     }
 

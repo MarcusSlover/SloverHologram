@@ -6,6 +6,7 @@ import net.minecraft.server.v1_12_R1.EntityArmorStand;
 import net.minecraft.server.v1_12_R1.PacketPlayOutEntityDestroy;
 import net.minecraft.server.v1_12_R1.PacketPlayOutSpawnEntityLiving;
 import net.minecraft.server.v1_12_R1.WorldServer;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -33,12 +34,26 @@ public class SloverHologramAPI {
         if (Holograms.exists(name)) {
             for (Hologram hologram : SloverHologram.allHologramObjects) {
                 if (hologram.getName().equalsIgnoreCase(name)) {
-                    if (hologram.entities.containsKey(player)) {
+                    if (hologram.entities.containsKey(player.getUniqueId())) {
+                        hologram.remove(player);
                         hologram.setLines(newLines);
                         hologram.show(player);
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * An api method with sets line of the hologram
+     * for everyone one the server
+     * @param name name of the hologram
+     * @param i line number
+     * @param line the new line
+     */
+    public void setHologramLine(String name, int i, String line) {
+        if (Holograms.exists(name)) {
+            Holograms.setLine(name, i, new StringBuilder(line));
         }
     }
 
@@ -60,14 +75,6 @@ public class SloverHologramAPI {
      * @param lines lines of the hologram
      */
     private void generateFakeHologram(Player player, Location location, String[] lines) {
-        for (Map.Entry<Player, List<EntityArmorStand>> set : fakeHologram.entrySet()) {
-            if (set.getKey().getUniqueId() == player.getUniqueId()) {
-                for (EntityArmorStand entityArmorStand : set.getValue()) {
-                    PacketPlayOutEntityDestroy packet = new PacketPlayOutEntityDestroy(entityArmorStand.getBukkitEntity().getEntityId());
-                    ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
-                }
-            }
-        }
         Location loc = location.clone();
         double space = Holograms.space();
         if (!fakeHologram.containsKey(player)) {

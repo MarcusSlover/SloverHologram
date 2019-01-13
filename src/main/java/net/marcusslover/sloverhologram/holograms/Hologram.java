@@ -10,16 +10,13 @@ import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Hologram implements Cloneable {
     private final String name;
     private List<String> lines;
     private Location location;
-    public Map<Player, List<EntityArmorStand>> entities = new HashMap<>();
+    public Map<UUID, List<EntityArmorStand>> entities = new HashMap<>();
 
     /**
      * A method which creates a new hologram object
@@ -89,7 +86,9 @@ public class Hologram implements Cloneable {
      * @param player the player
      */
     public void show(Player player) {
-        this.generateHologram(player);
+        if (this.location.getWorld().equals(player.getWorld())) {
+            this.generateHologram(player);
+        }
     }
 
     /**
@@ -107,20 +106,25 @@ public class Hologram implements Cloneable {
      * @param player the player packet will be send to
      */
     private void generateHologram(Player player) {
-        for (Map.Entry<Player, List<EntityArmorStand>> set : entities.entrySet()) {
-            if (set.getKey().getUniqueId() == player.getUniqueId()) {
+        List<EntityArmorStand> toRemove = new ArrayList<>();
+        for (Map.Entry<UUID, List<EntityArmorStand>> set : entities.entrySet()) {
+            if (set.getKey() == player.getUniqueId()) {
                 for (EntityArmorStand entityArmorStand : set.getValue()) {
                     PacketPlayOutEntityDestroy packet = new PacketPlayOutEntityDestroy(entityArmorStand.getBukkitEntity().getEntityId());
                     ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+                    toRemove.add(entityArmorStand);
                 }
             }
         }
         Location loc = this.location.clone();
         double space = Holograms.space();
-        if (!entities.containsKey(player)) {
-            entities.put(player, new ArrayList<>());
+        if (!entities.containsKey(player.getUniqueId())) {
+            entities.put(player.getUniqueId(), new ArrayList<>());
         }
-        List<EntityArmorStand> list = entities.get(player);
+        List<EntityArmorStand> list = entities.get(player.getUniqueId());
+        for (EntityArmorStand entityArmorStand : toRemove) {
+            list.remove(entityArmorStand);
+        }
         for (int i = 0; i < this.lines.size(); i++) {
             EntityArmorStand entityArmorStand = getHologramLine(loc, this.getLine(i));
             PacketPlayOutSpawnEntityLiving packet = new PacketPlayOutSpawnEntityLiving(entityArmorStand);
@@ -128,7 +132,7 @@ public class Hologram implements Cloneable {
             loc.add(0, -space, 0);
             list.add(entityArmorStand);
         }
-        entities.put(player, list);
+        entities.put(player.getUniqueId(), list);
     }
 
     /**
@@ -137,8 +141,8 @@ public class Hologram implements Cloneable {
      * @param player the player packet will be send to
      */
     private void destroyHologram(Player player) {
-        for (Map.Entry<Player, List<EntityArmorStand>> set : entities.entrySet()) {
-            if (set.getKey().getUniqueId() == player.getUniqueId()) {
+        for (Map.Entry<UUID, List<EntityArmorStand>> set : entities.entrySet()) {
+            if (set.getKey() == player.getUniqueId()) {
                 for (EntityArmorStand entityArmorStand : set.getValue()) {
                     PacketPlayOutEntityDestroy packet = new PacketPlayOutEntityDestroy(entityArmorStand.getBukkitEntity().getEntityId());
                     ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
