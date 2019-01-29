@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 
-public class Hologram implements Cloneable {
+public class Hologram {
     private final String name;
     private List<String> lines;
     private Location location;
@@ -29,6 +29,16 @@ public class Hologram implements Cloneable {
         this.lines = lines;
         this.location = location;
         SloverHologram.addHologramObject(this);
+    }
+
+
+    /**
+     * A method which clears old stored map with
+     * uuid that was added twice
+     * @param uuid
+     */
+    public void clearMap(UUID uuid) {
+        entities.remove(uuid);
     }
 
     /**
@@ -122,9 +132,7 @@ public class Hologram implements Cloneable {
             entities.put(player.getUniqueId(), new ArrayList<>());
         }
         List<EntityArmorStand> list = entities.get(player.getUniqueId());
-        for (EntityArmorStand entityArmorStand : toRemove) {
-            list.remove(entityArmorStand);
-        }
+        toRemove.forEach(list::remove);
         for (int i = 0; i < this.lines.size(); i++) {
             EntityArmorStand entityArmorStand = getHologramLine(loc, this.getLine(i));
             PacketPlayOutSpawnEntityLiving packet = new PacketPlayOutSpawnEntityLiving(entityArmorStand);
@@ -183,13 +191,5 @@ public class Hologram implements Cloneable {
      * to that point which won't be the same one
      * @return cloned class
      */
-    @Override
-    public Hologram clone() {
-        try {
-            SloverHologram.addHologramObject((Hologram) super.clone());
-            return (Hologram) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new Error(e);
-        }
-    }
+
 }

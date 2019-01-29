@@ -12,13 +12,14 @@ import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class SloverHologram extends JavaPlugin {
+public final class SloverHologram extends JavaPlugin implements Listener {
 
     //prefix
     public static String prefix = "&b&lSLOVER HOLOGRAM!";
@@ -26,7 +27,7 @@ public final class SloverHologram extends JavaPlugin {
     private Server server = this.getServer();
     public ConsoleCommandSender console = this.server.getConsoleSender();
     public SloverHologramData sloverHologramData;
-    public List<Hologram> hologramList = new ArrayList<>();
+    public static List<Hologram> hologramList = new ArrayList<>();
     public SloverConfig sloverConfig;
     private static SloverHologramAPI hologramAPI;
 
@@ -85,9 +86,10 @@ public final class SloverHologram extends JavaPlugin {
             Location location = this.sloverHologramData.getLocation("hologram-data."+hologramName+".location");
             List<String> lines = this.sloverHologramData.getList("hologram-data."+hologramName+".lines");
             Hologram hologram = new Hologram(hologramName, lines, location);
-            this.hologramList.add(hologram.clone());
+            this.hologramList.add(hologram);
             for (Player player : Bukkit.getOnlinePlayers()) {
-                hologram.show(player);
+                this.hologramList.forEach(h -> h.clearMap(player.getUniqueId()));
+                this.hologramList.forEach(h -> h.show(player));
             }
         }
     }
