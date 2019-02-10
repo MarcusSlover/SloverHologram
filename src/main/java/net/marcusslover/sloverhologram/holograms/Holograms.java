@@ -20,7 +20,6 @@ public class Holograms {
      * @param name name of the hologram
      * @return true or false
      */
-    @SuppressWarnings("unchecked")
     public static boolean exists(String name) {
         List<String> list = sloverHologram.getHologramNames();
         return list.contains(name);
@@ -32,7 +31,6 @@ public class Holograms {
      * @param location location where the hologram will appear
      * @param value first line of the hologram
      */
-    @SuppressWarnings("unchecked")
     public static void create(String name, Location location, String value) {
         List<String> lines = new ArrayList<>();
         lines.add(value);
@@ -42,7 +40,7 @@ public class Holograms {
         sloverHologram.sloverHologramData.set("hologram-list", list);
         sloverHologram.sloverHologramData.set("hologram-data."+name+".lines", lines);
         sloverHologram.sloverHologramData.set("hologram-data."+name+".location", location);
-        sloverHologram.hologramList.add(hologram);
+        SloverHologram.hologramList.add(hologram);
         for (Player player : Bukkit.getOnlinePlayers()) {
             hologram.show(player);
         }
@@ -52,10 +50,9 @@ public class Holograms {
      * A method which removes a hologram
      * @param name name of the hologram
      */
-    @SuppressWarnings("unchecked")
     public static void delete(String name) {
         Hologram holo = null;
-        for (Hologram hologram : sloverHologram.hologramList) {
+        for (Hologram hologram : SloverHologram.hologramList) {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 holo = hologram;
                 List<String> list = sloverHologram.getHologramNames();
@@ -71,7 +68,7 @@ public class Holograms {
             }
         }
         if (holo != null) {
-            sloverHologram.hologramList.remove(holo);
+            SloverHologram.hologramList.remove(holo);
         }
     }
 
@@ -83,7 +80,7 @@ public class Holograms {
     public static void addLine(String name, StringBuilder value) {
         String newValue = value.toString();
         newValue = newValue.substring(0, newValue.length() - 1);
-        for (Hologram hologram : sloverHologram.hologramList) {
+        for (Hologram hologram : SloverHologram.hologramList) {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 List<String> lines = hologram.getLines();
                 lines.add(newValue);
@@ -105,7 +102,7 @@ public class Holograms {
     public static void setLine(String name, int i, StringBuilder value) {
         String newValue = value.toString();
         newValue = newValue.substring(0, newValue.length() - 1);
-        for (Hologram hologram : sloverHologram.hologramList) {
+        for (Hologram hologram : SloverHologram.hologramList) {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 List<String> lines = hologram.getLines();
                 lines.set(i - 1, newValue);
@@ -125,7 +122,7 @@ public class Holograms {
      * @param location new location
      */
     public static void teleport(String name, Location location) {
-        for (Hologram hologram : sloverHologram.hologramList) {
+        for (Hologram hologram : SloverHologram.hologramList) {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 hologram.setLocation(location);
                 sloverHologram.sloverHologramData.set("hologram-data."+name+".location", location);
@@ -142,11 +139,10 @@ public class Holograms {
      * @param value a line which will be removed
      */
     public static void removeLine(String name, int value) {
-        int line = value;
-        for (Hologram hologram : sloverHologram.hologramList) {
+        for (Hologram hologram : SloverHologram.hologramList) {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 List<String> lines = hologram.getLines();
-                lines.remove(line - 1);
+                lines.remove(value - 1);
                 hologram.setLines(lines);
                 sloverHologram.sloverHologramData.set("hologram-data."+name+".lines", lines);
                 for (Player player : Bukkit.getOnlinePlayers()) {
@@ -162,7 +158,7 @@ public class Holograms {
      * @return size of the hologram list
      */
     public static int size(String name) {
-        for (Hologram hologram : sloverHologram.hologramList) {
+        for (Hologram hologram : SloverHologram.hologramList) {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 return hologram.getLines().size();
             }

@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 
+@SuppressWarnings("WeakerAccess")
 public class Hologram {
     private final String name;
     private List<String> lines;
@@ -35,7 +36,7 @@ public class Hologram {
     /**
      * A method which clears old stored map with
      * uuid that was added twice
-     * @param uuid
+     * @param uuid uuid of a certain player
      */
     public void clearMap(UUID uuid) {
         entities.remove(uuid);
@@ -185,11 +186,4 @@ public class Hologram {
     private String getColor(String string) {
         return string.replaceAll("&", "§");
     }
-
-    /**
-     * A method which clones current class object
-     * to that point which won't be the same one
-     * @return cloned class
-     */
-
 }

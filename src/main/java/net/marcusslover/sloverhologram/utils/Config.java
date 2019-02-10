@@ -8,10 +8,12 @@ import java.io.File;
 import java.io.IOException;
 
 public class Config {
+    @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private SloverHologram sloverHologram;
     private File file;
     public FileConfiguration config;
 
+    @SuppressWarnings({"ResultOfMethodCallIgnored", "WeakerAccess"})
     public Config(SloverHologram sloverHologram, String filename) {
         this.sloverHologram = sloverHologram;
         this.file = new File(sloverHologram.getDataFolder(), filename);

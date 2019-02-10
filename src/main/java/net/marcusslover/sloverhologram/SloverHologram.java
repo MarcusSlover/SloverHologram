@@ -25,7 +25,7 @@ public final class SloverHologram extends JavaPlugin implements Listener {
     public static String prefix = "&b&lSLOVER HOLOGRAM!";
     public static List<Hologram> allHologramObjects = new ArrayList<>();
     private Server server = this.getServer();
-    public ConsoleCommandSender console = this.server.getConsoleSender();
+    private ConsoleCommandSender console = this.server.getConsoleSender();
     public SloverHologramData sloverHologramData;
     public static List<Hologram> hologramList = new ArrayList<>();
     public SloverConfig sloverConfig;
@@ -86,10 +86,10 @@ public final class SloverHologram extends JavaPlugin implements Listener {
             Location location = this.sloverHologramData.getLocation("hologram-data."+hologramName+".location");
             List<String> lines = this.sloverHologramData.getList("hologram-data."+hologramName+".lines");
             Hologram hologram = new Hologram(hologramName, lines, location);
-            this.hologramList.add(hologram);
+            hologramList.add(hologram);
             for (Player player : Bukkit.getOnlinePlayers()) {
-                this.hologramList.forEach(h -> h.clearMap(player.getUniqueId()));
-                this.hologramList.forEach(h -> h.show(player));
+                hologramList.forEach(h -> h.clearMap(player.getUniqueId()));
+                hologramList.forEach(h -> h.show(player));
             }
         }
     }
@@ -103,7 +103,6 @@ public final class SloverHologram extends JavaPlugin implements Listener {
     /**
      * A method which unloads all of the created holograms
      */
-    @SuppressWarnings("unchecked")
     private void unloadHolograms() {
         for (Hologram hologram : allHologramObjects) {
             for (Player player : Bukkit.getOnlinePlayers()) {

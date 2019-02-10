@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+@SuppressWarnings("unused")
 public class Text implements Sendable {
 
     private String string;
@@ -33,7 +34,7 @@ public class Text implements Sendable {
         player.sendMessage(toColor(string));
     }
 
-    public static String toColor(String string) {
+    private static String toColor(String string) {
         return ChatColor.translateAlternateColorCodes('&', string);
     }
 

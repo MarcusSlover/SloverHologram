@@ -14,10 +14,11 @@ import org.bukkit.entity.Player;
 import java.util.*;
 
 public class SloverHologramAPI {
+    @SuppressWarnings({"unused", "FieldCanBeLocal"})
     private final SloverHologram sloverHologram;
-    public Map<Player, List<EntityArmorStand>> fakeHologram = new HashMap<>();
+    public Map<UUID, List<EntityArmorStand>> fakeHologram = new HashMap<>();
 
-    public SloverHologramAPI(SloverHologram sloverHologram) {
+    SloverHologramAPI(SloverHologram sloverHologram) {
         this.sloverHologram = sloverHologram;
     }
 
@@ -28,6 +29,7 @@ public class SloverHologramAPI {
      * @param name name of the hologram
      * @param lines the new lines
      */
+    @SuppressWarnings("unused")
     public void updateHologram(Player player, String name, String[] lines) {
         List<String> newLines = new ArrayList<>(Arrays.asList(lines));
         if (Holograms.exists(name)) {
@@ -50,6 +52,7 @@ public class SloverHologramAPI {
      * @param i line number
      * @param line the new line
      */
+    @SuppressWarnings("unused")
     public void setHologramLine(String name, int i, String line) {
         if (Holograms.exists(name)) {
             Holograms.setLine(name, i, new StringBuilder(line));
@@ -62,6 +65,7 @@ public class SloverHologramAPI {
      * this hologram cannot be edited
      * @param player the player
      */
+    @SuppressWarnings("unused")
     public void createFakeHologram(Player player, Location location, String[] lines) {
         this.generateFakeHologram(player, location, lines);
     }
@@ -76,19 +80,19 @@ public class SloverHologramAPI {
     private void generateFakeHologram(Player player, Location location, String[] lines) {
         Location loc = location.clone();
         double space = Holograms.space();
-        if (!fakeHologram.containsKey(player)) {
-            fakeHologram.put(player, new ArrayList<>());
+        if (!fakeHologram.containsKey(player.getUniqueId())) {
+            fakeHologram.put(player.getUniqueId(), new ArrayList<>());
         }
-        List<EntityArmorStand> list = fakeHologram.get(player);
+        List<EntityArmorStand> list = fakeHologram.get(player.getUniqueId());
         List<String> newLines = new ArrayList<>(Arrays.asList(lines));
-        for (int i = 0; i < newLines.size(); i++) {
-            EntityArmorStand entityArmorStand = getHologramLine(loc, newLines.get(i));
+        for (String newLine : newLines) {
+            EntityArmorStand entityArmorStand = getHologramLine(loc, newLine);
             PacketPlayOutSpawnEntityLiving packet = new PacketPlayOutSpawnEntityLiving(entityArmorStand);
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
             loc.add(0, -space, 0);
             list.add(entityArmorStand);
         }
-        fakeHologram.put(player, list);
+        fakeHologram.put(player.getUniqueId(), list);
     }
 
     /**
@@ -96,9 +100,9 @@ public class SloverHologramAPI {
      * and sends the packets to a certain player
      * @param player the player packet will be send to
      */
-    public void destroyHolograms(Player player) {
-        for (Map.Entry<Player, List<EntityArmorStand>> set : fakeHologram.entrySet()) {
-            if (set.getKey().getUniqueId() == player.getUniqueId()) {
+    void destroyHolograms(Player player) {
+        for (Map.Entry<UUID, List<EntityArmorStand>> set : fakeHologram.entrySet()) {
+            if (set.getKey() == player.getUniqueId()) {
                 for (EntityArmorStand entityArmorStand : set.getValue()) {
                     PacketPlayOutEntityDestroy packet = new PacketPlayOutEntityDestroy(entityArmorStand.getBukkitEntity().getEntityId());
                     ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);

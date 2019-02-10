@@ -3,39 +3,14 @@ package net.marcusslover.sloverhologram.utils;
 import net.marcusslover.sloverhologram.SloverHologram;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("WeakerAccess")
 public class SloverHologramData extends Config {
     public SloverHologramData(SloverHologram sloverHologram, String filename) {
         super(sloverHologram, filename);
-    }
-
-    public void set(String path, int value) {
-        config.set(path, value);
-        save();
-    }
-
-    public void set(String path, double value) {
-        config.set(path, value);
-        save();
-    }
-
-    public void set(String path, float value) {
-        config.set(path, value);
-        save();
-    }
-
-    public void set(String path, String value) {
-        config.set(path, value);
-        save();
-    }
-
-    public void set(String path, ItemStack value) {
-        config.set(path, value);
-        save();
     }
 
     public void set(String path, Location value) {
@@ -53,47 +28,11 @@ public class SloverHologramData extends Config {
         save();
     }
 
-    public int getInt(String path) {
-        if (config.contains(path)) {
-            return config.getInt(path);
-        }
-        return 0;
-    }
-
-    public float getFloat(String path) {
-        if (config.contains(path)) {
-            return Float.parseFloat(config.getString(path));
-        }
-        return 0.0f;
-    }
-
-    public int getIntDelivery(String path) {
-        if (config.contains(path)) {
-            return config.getInt(path);
-        }
-        return -1;
-    }
-
     public double getDouble(String path) {
         if (config.contains(path)) {
             return config.getDouble(path);
         }
         return 0;
-    }
-    public double getDouble(String path, double d) {
-        if (config.contains(path)) {
-            return config.getDouble(path);
-        } else {
-            set(path, d);
-        }
-        return d;
-    }
-
-    public ItemStack getItemStack(String path) {
-        if (config.contains(path)) {
-            return config.getItemStack(path);
-        }
-        return null;
     }
 
     public String getString(String path) {
@@ -123,8 +62,7 @@ public class SloverHologramData extends Config {
         if (config.contains(path)) {
             return config.getList(path);
         }
-        ArrayList empty = new ArrayList();
-        return empty;
+        return new ArrayList();
     }
 
 }
