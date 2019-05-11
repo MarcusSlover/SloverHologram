@@ -1,21 +1,12 @@
 package net.marcusslover.sloverhologram.events;
 
 import net.marcusslover.sloverhologram.SloverHologram;
-import net.minecraft.server.v1_12_R1.EntityArmorStand;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.ArmorStand;
+import net.marcusslover.sloverhologram.holograms.Hologram;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChangedWorldEvent;
-import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 public class Events implements Listener {
     private final SloverHologram sloverHologram;
@@ -27,60 +18,46 @@ public class Events implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                SloverHologram.hologramList.forEach(h -> h.clearMap(player.getUniqueId()));
-                SloverHologram.hologramList.forEach(h -> h.show(player));
-            }
-        }.runTaskLater(sloverHologram, 10L);
+        updateHolograms(player);
+    }
+
+    @EventHandler
+    public void onTeleport(PlayerTeleportEvent event) {
+        Player player = event.getPlayer();
+        updateHolograms(player);
 
     }
 
     @EventHandler
     public void onDeath(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                SloverHologram.hologramList.forEach(h -> h.clearMap(player.getUniqueId()));
-                SloverHologram.hologramList.forEach(h -> h.show(player));
-            }
-        }.runTaskLater(sloverHologram, 10L);
+        updateHolograms(player);
     }
 
     @EventHandler
     public void onWorldSwitch(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                SloverHologram.hologramList.forEach(h -> h.clearMap(player.getUniqueId()));
-                SloverHologram.hologramList.forEach(h -> h.show(player));
-            }
-        }.runTaskLater(sloverHologram, 20L);
+        updateHolograms(player);
     }
 
     @EventHandler
-    public void onHologramClick(PlayerInteractAtEntityEvent event) {
-        if (event.getRightClicked() instanceof ArmorStand) {
-            SloverHologram.hologramList.forEach(h -> {
-                for (Map.Entry<UUID, List<EntityArmorStand>> entry : h.entities.entrySet()) {
-                    List<EntityArmorStand> list = entry.getValue();
-                    list.forEach(a -> {
-                        if (a.getUniqueID().equals(event.getRightClicked().getUniqueId())) {
-                            SloverHologramInteractEvent sloverHologramInteractEvent = new SloverHologramInteractEvent(h, event.getPlayer());
-                            Bukkit.getPluginManager().callEvent(sloverHologramInteractEvent);
-                        }
-                    });
-                }
-            });
-            SloverHologram.getAPI().fakeHologram.forEach((player, entityArmorStands) -> entityArmorStands.forEach(a -> {
-                if (a.getUniqueID().equals(event.getRightClicked().getUniqueId())) {
-                    SloverHologramInteractEvent sloverHologramInteractEvent = new SloverHologramInteractEvent(a, event.getPlayer());
-                    Bukkit.getPluginManager().callEvent(sloverHologramInteractEvent);
-                }
-            }));
+    public void onQuit(PlayerQuitEvent e) {
+        Player player = e.getPlayer();
+
+        for (Hologram h : SloverHologram.hologramList) {
+            h.destroyHologram(player);
         }
     }
+
+    public void updateHolograms(Player player) {
+        SloverHologram.hologramList.forEach(h -> h.destroyHologram(player));
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                SloverHologram.hologramList.stream().filter(h -> !h.entities.containsKey(player.getUniqueId())).forEach(h -> h.show(player));
+            }
+        }.runTaskLater(sloverHologram, 15L);
+    }
+
 }

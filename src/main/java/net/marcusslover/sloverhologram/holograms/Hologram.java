@@ -5,6 +5,7 @@ import net.minecraft.server.v1_12_R1.EntityArmorStand;
 import net.minecraft.server.v1_12_R1.PacketPlayOutEntityDestroy;
 import net.minecraft.server.v1_12_R1.PacketPlayOutSpawnEntityLiving;
 import net.minecraft.server.v1_12_R1.WorldServer;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -17,6 +18,7 @@ public class Hologram {
     private final String name;
     private List<String> lines;
     private Location location;
+    private Chunk chunk;
     public Map<UUID, List<EntityArmorStand>> entities = new HashMap<>();
 
     /**
@@ -29,17 +31,16 @@ public class Hologram {
         this.name = name;
         this.lines = lines;
         this.location = location;
+        this.chunk = location.getChunk();
         SloverHologram.addHologramObject(this);
     }
 
-
     /**
-     * A method which clears old stored map with
-     * uuid that was added twice
-     * @param uuid uuid of a certain player
+     * A method which returns chunk the hologram is in
+     * @return the chunk
      */
-    public void clearMap(UUID uuid) {
-        entities.remove(uuid);
+    public Chunk getChunk() {
+        return chunk;
     }
 
     /**
@@ -98,7 +99,9 @@ public class Hologram {
      */
     public void show(Player player) {
         if (this.location.getWorld().equals(player.getWorld())) {
-            this.generateHologram(player);
+            if (this.getLocation().getChunk().isLoaded()) {
+                this.generateHologram(player);
+            }
         }
     }
 
@@ -149,7 +152,7 @@ public class Hologram {
      * and sends the packets to a certain player
      * @param player the player packet will be send to
      */
-    private void destroyHologram(Player player) {
+    public void destroyHologram(Player player) {
         for (Map.Entry<UUID, List<EntityArmorStand>> set : entities.entrySet()) {
             if (set.getKey() == player.getUniqueId()) {
                 for (EntityArmorStand entityArmorStand : set.getValue()) {
@@ -158,6 +161,7 @@ public class Hologram {
                 }
             }
         }
+        entities.remove(player.getUniqueId());
     }
 
     /**

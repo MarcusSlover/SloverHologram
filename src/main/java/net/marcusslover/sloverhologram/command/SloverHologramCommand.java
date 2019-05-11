@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SloverHologramCommand implements CommandExecutor {
@@ -107,7 +108,7 @@ public class SloverHologramCommand implements CommandExecutor {
                                     try {
                                         int line = Integer.parseInt(args[2]);
                                         if (line >= 1) {
-                                            if (Holograms.size(args[1]) > line) {
+                                            if (Holograms.size(args[1]) > line - 1) {
                                                 Holograms.removeLine(args[1], line);
                                                 new Text(SloverHologram.prefix + " &7Line removed!").send(player);
                                             } else {
@@ -304,7 +305,7 @@ public class SloverHologramCommand implements CommandExecutor {
                                     try {
                                         int line = Integer.parseInt(args[2]);
                                         if (line >= 1) {
-                                            if (Holograms.size(args[1]) > line) {
+                                            if (Holograms.size(args[1]) > line - 1) {
                                                 Holograms.removeLine(args[1], line);
                                                 new Text(SloverHologram.prefix + " &7Line removed!").send(sender);
                                             } else {
@@ -337,7 +338,7 @@ public class SloverHologramCommand implements CommandExecutor {
                                                 if (line >= 1) {
                                                     if (Holograms.size(args[1]) >= line) {
                                                         Holograms.setLine(args[1], line, value);
-                                                        new Text(SloverHologram.prefix + " &7Line updated!").send(sender);
+                                                        //new Text(SloverHologram.prefix + " &7Line updated!").send(sender);
                                                     } else {
                                                         new Text(SloverHologram.prefix + " &7This hologram doesn't have that many lines!").send(sender);
                                                     }
@@ -348,7 +349,7 @@ public class SloverHologramCommand implements CommandExecutor {
                                                 new Text(SloverHologram.prefix + " &7This is not a number!").send(sender);
                                             }
                                         } else {
-                                            new Text(SloverHologram.prefix + " &7This hologram doesn't exist!").send(sender);
+                                            new Text(SloverHologram.prefix + " &7This hologram doesn't exist! &c(Details: &6"+ Arrays.toString(args)).send(sender);
                                         }
                                     } else {
                                         new Text(SloverHologram.prefix+" &7Usage: &f/sh setline (name) (number) (text)&7!").send(sender);

@@ -45,7 +45,7 @@ public final class SloverHologram extends JavaPlugin implements Listener {
                 hologramAPI = new SloverHologramAPI(main);
                 loadHolograms();
             }
-        }.runTaskLater(this, 20*5L);
+        }.runTaskLater(this, 20*4L);
     }
 
     /**
@@ -88,7 +88,7 @@ public final class SloverHologram extends JavaPlugin implements Listener {
             Hologram hologram = new Hologram(hologramName, lines, location);
             hologramList.add(hologram);
             for (Player player : Bukkit.getOnlinePlayers()) {
-                hologramList.forEach(h -> h.clearMap(player.getUniqueId()));
+                hologramList.forEach(h -> h.destroyHologram(player));
                 hologramList.forEach(h -> h.show(player));
             }
         }
@@ -115,7 +115,7 @@ public final class SloverHologram extends JavaPlugin implements Listener {
             }
         }
         for (Player player : Bukkit.getOnlinePlayers()) {
-            if (getAPI().fakeHologram.containsKey(player)) {
+            if (getAPI().fakeHologram.containsKey(player.getUniqueId())) {
                 getAPI().destroyHolograms(player);
             }
         }

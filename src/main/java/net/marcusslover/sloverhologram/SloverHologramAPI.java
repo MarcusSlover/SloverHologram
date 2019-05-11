@@ -67,6 +67,7 @@ public class SloverHologramAPI {
      */
     @SuppressWarnings("unused")
     public void createFakeHologram(Player player, Location location, String[] lines) {
+        if (!location.getChunk().isLoaded()) return;
         this.generateFakeHologram(player, location, lines);
     }
 
@@ -100,7 +101,7 @@ public class SloverHologramAPI {
      * and sends the packets to a certain player
      * @param player the player packet will be send to
      */
-    void destroyHolograms(Player player) {
+    public void destroyHolograms(Player player) {
         for (Map.Entry<UUID, List<EntityArmorStand>> set : fakeHologram.entrySet()) {
             if (set.getKey() == player.getUniqueId()) {
                 for (EntityArmorStand entityArmorStand : set.getValue()) {
@@ -109,6 +110,7 @@ public class SloverHologramAPI {
                 }
             }
         }
+        fakeHologram.remove(player.getUniqueId());
     }
 
     /**
