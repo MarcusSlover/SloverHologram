@@ -8,30 +8,21 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Holograms {
+public class Holograms implements HologramEditor {
     private static SloverHologram sloverHologram;
 
     public Holograms(SloverHologram sloverHologram) {
         Holograms.sloverHologram = sloverHologram;
     }
 
-    /**
-     * A method which checks if certain hologram exists
-     * @param name name of the hologram
-     * @return true or false
-     */
-    public static boolean exists(String name) {
+    @Override
+    public boolean exists(final String name) {
         List<String> list = sloverHologram.getHologramNames();
         return list.contains(name);
     }
 
-    /**
-     * A method which creates a new hologram
-     * @param name name of the hologram
-     * @param location location where the hologram will appear
-     * @param value first line of the hologram
-     */
-    public static void create(String name, Location location, String value) {
+    @Override
+    public void create(final String name, final Location location, final String value) {
         List<String> lines = new ArrayList<>();
         lines.add(value);
         Hologram hologram = new Hologram(name, lines, location);
@@ -46,11 +37,8 @@ public class Holograms {
         }
     }
 
-    /**
-     * A method which removes a hologram
-     * @param name name of the hologram
-     */
-    public static void delete(String name) {
+    @Override
+    public void delete(final String name) {
         Hologram holo = null;
         for (Hologram hologram : SloverHologram.hologramList) {
             if (hologram.getName().equalsIgnoreCase(name)) {
@@ -72,12 +60,8 @@ public class Holograms {
         }
     }
 
-    /**
-     * A method which adds a line to hologram
-     * @param name name of the hologram
-     * @param value a line which will be added
-     */
-    public static void addLine(String name, StringBuilder value) {
+    @Override
+    public void addLine(final String name, final StringBuilder value) {
         String newValue = value.toString();
         newValue = newValue.substring(0, newValue.length() - 1);
         for (Hologram hologram : SloverHologram.hologramList) {
@@ -93,13 +77,8 @@ public class Holograms {
         }
     }
 
-    /**
-     * A method which sets a line to hologram
-     * @param name name of the hologram
-     * @param value a line which will be set
-     * @param i the line number
-     */
-    public static void setLine(String name, int i, StringBuilder value) {
+    @Override
+    public void setLine(final String name, final int i, final StringBuilder value) {
         String newValue = value.toString();
         newValue = newValue.substring(0, newValue.length() - 1);
         for (Hologram hologram : SloverHologram.hologramList) {
@@ -115,13 +94,8 @@ public class Holograms {
         }
     }
 
-    /**
-     * A method which teleports hologram to a
-     * certain location
-     * @param name name of the hologram
-     * @param location new location
-     */
-    public static void teleport(String name, Location location) {
+    @Override
+    public void teleport(final String name, final Location location) {
         for (Hologram hologram : SloverHologram.hologramList) {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 hologram.setLocation(location);
@@ -133,12 +107,21 @@ public class Holograms {
         }
     }
 
-    /**
-     * A method which remove a line to hologram
-     * @param name name of the hologram
-     * @param value a line which will be removed
-     */
-    public static void removeLine(String name, int value) {
+    @Override
+    public void teleportPlayer(final String name, final Player player) {
+        for (Hologram hologram : SloverHologram.hologramList) {
+            if (hologram.getName().equalsIgnoreCase(name)) {
+                if (!hologram.getChunk().isLoaded()) {
+                    hologram.getChunk().load();
+                }
+                player.teleport(hologram.getLocation());
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void removeLine(final String name, final int value) {
         for (Hologram hologram : SloverHologram.hologramList) {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 List<String> lines = hologram.getLines();
@@ -152,12 +135,8 @@ public class Holograms {
         }
     }
 
-    /**
-     * A method which returns size of hologram lines
-     * @param name name of the hologram
-     * @return size of the hologram list
-     */
-    public static int size(String name) {
+    @Override
+    public int size(final String name) {
         for (Hologram hologram : SloverHologram.hologramList) {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 return hologram.getLines().size();
@@ -166,12 +145,9 @@ public class Holograms {
         return 0;
     }
 
-    /**
-     * A method with returns a double which is
-     * a distance between hologram lines
-     * @return distance in double
-     */
-    public static double space() {
+    @Override
+    public double space() {
         return sloverHologram.sloverConfig.getDouble("hologram-space", 0.4d);
     }
+
 }

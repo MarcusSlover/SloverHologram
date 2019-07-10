@@ -6,19 +6,18 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
+@Deprecated
 public class SloverHologramInteractEvent extends Event {
     private EntityArmorStand a = null;
     private Hologram hologram = null;
     private Player player;
 
 
-    @SuppressWarnings("WeakerAccess")
     public SloverHologramInteractEvent(Hologram hologram, Player player) {
         this.hologram = hologram;
         this.player = player;
     }
 
-    @SuppressWarnings("WeakerAccess")
     public SloverHologramInteractEvent(EntityArmorStand a, Player player) {
         this.a = a;
         this.player = player;

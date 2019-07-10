@@ -49,13 +49,18 @@ public class Events implements Listener {
         }
     }
 
-    public void updateHolograms(Player player) {
+    private void updateHolograms(Player player) {
         SloverHologram.hologramList.forEach(h -> h.destroyHologram(player));
 
         new BukkitRunnable() {
             @Override
             public void run() {
-                SloverHologram.hologramList.stream().filter(h -> !h.entities.containsKey(player.getUniqueId())).forEach(h -> h.show(player));
+
+                for (Hologram h : SloverHologram.hologramList) {
+                    if (!h.entities.containsKey(player.getUniqueId())) {
+                        h.show(player);
+                    }
+                }
             }
         }.runTaskLater(sloverHologram, 15L);
     }

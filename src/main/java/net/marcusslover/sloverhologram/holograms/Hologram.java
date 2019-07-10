@@ -27,7 +27,7 @@ public class Hologram {
      * @param lines lines of the hologram
      * @param location location of the hologram
      */
-    public Hologram(String name, List<String> lines, Location location) {
+    public Hologram(final String name, final List<String> lines, final Location location) {
         this.name = name;
         this.lines = lines;
         this.location = location;
@@ -55,7 +55,7 @@ public class Hologram {
      * A method which sets location of hologram
      * @param location new location
      */
-    public void setLocation(Location location) {
+    public void setLocation(final Location location) {
         this.location = location;
     }
 
@@ -64,7 +64,7 @@ public class Hologram {
      * @param i number
      * @return actual string line of the hologram
      */
-    public String getLine(int i) {
+    public String getLine(final int i) {
         return lines.get(i);
     }
 
@@ -88,7 +88,7 @@ public class Hologram {
      * A method which sets lines of the hologram
      * @param stringList a new list of lines
      */
-    public void setLines(List<String> stringList) {
+    public void setLines(final List<String> stringList) {
         this.lines = stringList;
     }
 
@@ -97,7 +97,11 @@ public class Hologram {
      * to a certain player
      * @param player the player
      */
-    public void show(Player player) {
+    public void show(final Player player) {
+        if (this.location.getWorld() == null) {
+            return;
+        }
+
         if (this.location.getWorld().equals(player.getWorld())) {
             if (this.getLocation().getChunk().isLoaded()) {
                 this.generateHologram(player);
@@ -110,7 +114,7 @@ public class Hologram {
      * to a certain player
      * @param player the player
      */
-    public void remove(Player player) {
+    public void remove(final Player player) {
         this.destroyHologram(player);
     }
 
@@ -119,7 +123,7 @@ public class Hologram {
      * and sends the packets to a certain player
      * @param player the player packet will be send to
      */
-    private void generateHologram(Player player) {
+    private void generateHologram(final Player player) {
         List<EntityArmorStand> toRemove = new ArrayList<>();
         for (Map.Entry<UUID, List<EntityArmorStand>> set : entities.entrySet()) {
             if (set.getKey() == player.getUniqueId()) {
@@ -131,7 +135,7 @@ public class Hologram {
             }
         }
         Location loc = this.location.clone();
-        double space = Holograms.space();
+        double space = SloverHologram.getHologramClass().space();
         if (!entities.containsKey(player.getUniqueId())) {
             entities.put(player.getUniqueId(), new ArrayList<>());
         }
@@ -152,7 +156,11 @@ public class Hologram {
      * and sends the packets to a certain player
      * @param player the player packet will be send to
      */
-    public void destroyHologram(Player player) {
+    public void destroyHologram(final Player player) {
+        if (!entities.containsKey(player.getUniqueId())) {
+            return;
+        }
+
         for (Map.Entry<UUID, List<EntityArmorStand>> set : entities.entrySet()) {
             if (set.getKey() == player.getUniqueId()) {
                 for (EntityArmorStand entityArmorStand : set.getValue()) {
@@ -168,17 +176,19 @@ public class Hologram {
      * A method with returns crafted armor stand
      * @return crafted armor stand
      */
-    private EntityArmorStand getHologramLine(Location loc, String value) {
+    private EntityArmorStand getHologramLine(final Location loc, final String value) {
         WorldServer worldServer = ((CraftWorld) this.location.getWorld()).getHandle();
         EntityArmorStand entityArmorStand = new EntityArmorStand(worldServer);
+
         entityArmorStand.setSilent(true);
-        entityArmorStand.setMarker(false);
+        entityArmorStand.setMarker(true);
         entityArmorStand.setNoGravity(true);
         entityArmorStand.setSmall(true);
         entityArmorStand.setInvisible(true);
         entityArmorStand.setCustomNameVisible(true);
         entityArmorStand.setCustomName(getColor(value));
         entityArmorStand.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
+
         return entityArmorStand;
     }
 
@@ -187,7 +197,7 @@ public class Hologram {
      * @param string a normal string
      * @return colored string
      */
-    private String getColor(String string) {
+    private String getColor(final String string) {
         return string.replaceAll("&", "§");
     }
 }

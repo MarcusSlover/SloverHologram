@@ -14,12 +14,12 @@ import org.bukkit.entity.Player;
 import java.util.*;
 
 public class SloverHologramAPI {
-    @SuppressWarnings({"unused", "FieldCanBeLocal"})
-    private final SloverHologram sloverHologram;
+    private final Holograms holograms;
+    @SuppressWarnings("WeakerAccess")
     public Map<UUID, List<EntityArmorStand>> fakeHologram = new HashMap<>();
 
-    SloverHologramAPI(SloverHologram sloverHologram) {
-        this.sloverHologram = sloverHologram;
+    SloverHologramAPI() {
+        this.holograms = SloverHologram.getHologramClass();
     }
 
     /**
@@ -32,7 +32,7 @@ public class SloverHologramAPI {
     @SuppressWarnings("unused")
     public void updateHologram(Player player, String name, String[] lines) {
         List<String> newLines = new ArrayList<>(Arrays.asList(lines));
-        if (Holograms.exists(name)) {
+        if (this.holograms.exists(name)) {
             for (Hologram hologram : SloverHologram.allHologramObjects) {
                 if (hologram.getName().equalsIgnoreCase(name)) {
                     if (hologram.entities.containsKey(player.getUniqueId())) {
@@ -54,8 +54,8 @@ public class SloverHologramAPI {
      */
     @SuppressWarnings("unused")
     public void setHologramLine(String name, int i, String line) {
-        if (Holograms.exists(name)) {
-            Holograms.setLine(name, i, new StringBuilder(line));
+        if (this.holograms.exists(name)) {
+            this.holograms.setLine(name, i, new StringBuilder(line));
         }
     }
 
@@ -80,7 +80,7 @@ public class SloverHologramAPI {
      */
     private void generateFakeHologram(Player player, Location location, String[] lines) {
         Location loc = location.clone();
-        double space = Holograms.space();
+        double space = this.holograms.space();
         if (!fakeHologram.containsKey(player.getUniqueId())) {
             fakeHologram.put(player.getUniqueId(), new ArrayList<>());
         }
@@ -97,10 +97,63 @@ public class SloverHologramAPI {
     }
 
     /**
+     * A method which make a fake hologram appear
+     * to a certain player
+     *
+     * Returns the entity ids
+     *
+     * this hologram cannot be edited
+     * @param player the player
+     */
+    @SuppressWarnings("unused")
+    public int[] createFakeHologramInt(Player player, Location location, String[] lines) {
+        if (!location.getChunk().isLoaded()) return null;
+        return this.generateFakeHologramInt(player, location, lines);
+    }
+
+    /**
+     * A method which generates fake hologram
+     * and sends the packets to a certain player
+     *
+     * Returns the entity ids
+     *
+     * @param player the player packet will be send to
+     * @param location location where the hologram will be seen
+     * @param lines lines of the hologram
+     */
+    private int[] generateFakeHologramInt(Player player, Location location, String[] lines) {
+        Location loc = location.clone();
+        double space = this.holograms.space();
+        if (!fakeHologram.containsKey(player.getUniqueId())) {
+            fakeHologram.put(player.getUniqueId(), new ArrayList<>());
+        }
+        List<EntityArmorStand> list = fakeHologram.get(player.getUniqueId());
+        List<String> newLines = new ArrayList<>(Arrays.asList(lines));
+        for (String newLine : newLines) {
+            EntityArmorStand entityArmorStand = getHologramLine(loc, newLine);
+            PacketPlayOutSpawnEntityLiving packet = new PacketPlayOutSpawnEntityLiving(entityArmorStand);
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+            loc.add(0, -space, 0);
+            list.add(entityArmorStand);
+        }
+        fakeHologram.put(player.getUniqueId(), list);
+
+        int[] i = new int[list.size()];
+
+        for (int i1 = 0; i1 < list.size(); i1++) {
+            EntityArmorStand entityArmorStand = list.get(i1);
+            i[i1] = entityArmorStand.getBukkitEntity().getEntityId();
+        }
+
+        return i;
+    }
+
+    /**
      * A method which destroys all of the hologram
      * and sends the packets to a certain player
      * @param player the player packet will be send to
      */
+    @SuppressWarnings("WeakerAccess")
     public void destroyHolograms(Player player) {
         for (Map.Entry<UUID, List<EntityArmorStand>> set : fakeHologram.entrySet()) {
             if (set.getKey() == player.getUniqueId()) {
@@ -114,6 +167,35 @@ public class SloverHologramAPI {
     }
 
     /**
+     * A method which destroys a certain hologram
+     * and sends the packets to a certain player
+     * @param player the player packet will be send to
+     */
+    @SuppressWarnings("unused")
+    public void destroyHologram(Player player, int[] ids) {
+        List<EntityArmorStand> freshList = new ArrayList<>();
+        for (Map.Entry<UUID, List<EntityArmorStand>> set : fakeHologram.entrySet()) {
+            if (set.getKey() == player.getUniqueId()) {
+                for (EntityArmorStand entityArmorStand : set.getValue()) {
+                    boolean is = false;
+                    int id = entityArmorStand.getBukkitEntity().getEntityId();
+                    for (int i : ids) {
+                        if (i == id) {
+                            is = true;
+                        }
+                    }
+                    if (is) {
+                        PacketPlayOutEntityDestroy packet = new PacketPlayOutEntityDestroy(entityArmorStand.getBukkitEntity().getEntityId());
+                        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+                        freshList.remove(entityArmorStand);
+                    }
+                }
+            }
+        }
+        fakeHologram.put(player.getUniqueId(), freshList);
+    }
+
+    /**
      * A method with returns crafted armor stand
      * @return crafted armor stand
      */
@@ -121,7 +203,7 @@ public class SloverHologramAPI {
         WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
         EntityArmorStand entityArmorStand = new EntityArmorStand(worldServer);
         entityArmorStand.setSilent(true);
-        entityArmorStand.setMarker(false);
+        entityArmorStand.setMarker(true);
         entityArmorStand.setNoGravity(true);
         entityArmorStand.setSmall(true);
         entityArmorStand.setInvisible(true);
