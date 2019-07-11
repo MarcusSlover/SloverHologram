@@ -203,7 +203,7 @@ public class SloverHologramAPI {
         WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
         EntityArmorStand entityArmorStand = new EntityArmorStand(worldServer);
         entityArmorStand.setSilent(true);
-        entityArmorStand.setMarker(true);
+        entityArmorStand.setMarker(false);
         entityArmorStand.setNoGravity(true);
         entityArmorStand.setSmall(true);
         entityArmorStand.setInvisible(true);
