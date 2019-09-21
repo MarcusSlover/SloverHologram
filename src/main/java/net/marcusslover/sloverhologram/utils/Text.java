@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 public class Text implements Sendable {
 
     private String string;
-    public Text(String string) {
+    public Text(final String string) {
         this.string = string;
     }
 
@@ -16,25 +16,25 @@ public class Text implements Sendable {
         return ChatColor.translateAlternateColorCodes('&', this.string);
     }
 
-    public boolean equals(Text anotherText) {
+    public boolean equals(final Text anotherText) {
         return new Text(string).toString().equals(anotherText.toString());
     }
 
-    public boolean equals(String anotherText) {
+    public boolean equals(final String anotherText) {
         return new Text(string).toString().equals(new Text(anotherText).toString());
     }
 
     @Override
-    public void send(Player player) {
+    public void send(final Player player) {
         player.sendMessage(toColor(string));
     }
 
     @Override
-    public void send(CommandSender player) {
+    public void send(final CommandSender player) {
         player.sendMessage(toColor(string));
     }
 
-    private static String toColor(String string) {
+    private static String toColor(final String string) {
         return ChatColor.translateAlternateColorCodes('&', string);
     }
 

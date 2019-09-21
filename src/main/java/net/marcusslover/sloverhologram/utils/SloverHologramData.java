@@ -9,48 +9,51 @@ import java.util.List;
 
 @SuppressWarnings("WeakerAccess")
 public class SloverHologramData extends Config {
-    public SloverHologramData(SloverHologram sloverHologram, String filename) {
+    public SloverHologramData(final SloverHologram sloverHologram, final String filename) {
         super(sloverHologram, filename);
     }
 
-    public void set(String path, Location value) {
-        config.set(path+".x", value.getX());
-        config.set(path+".y", value.getY());
-        config.set(path+".z", value.getZ());
-        config.set(path+".pitch", (double) value.getPitch());
-        config.set(path+".yaw", (double) value.getYaw());
-        config.set(path+".world", value.getWorld().getName());
-        save();
+    public void set(final String path, final Location value) {
+        this.config.set(path+".x", value.getX());
+        this.config.set(path+".y", value.getY());
+        this.config.set(path+".z", value.getZ());
+        this.config.set(path+".pitch", (double) value.getPitch());
+        this.config.set(path+".yaw", (double) value.getYaw());
+        this.config.set(path+".world", value.getWorld().getName());
+        this.save();
     }
 
-    public void set(String path, List value) {
-        config.set(path, value);
-        save();
+    public void set(final String path, final List value) {
+        this.config.set(path, value);
+        this.save();
     }
 
-    public double getDouble(String path) {
-        if (config.contains(path)) {
-            return config.getDouble(path);
+    public double getDouble(final String path) {
+        if (this.config.contains(path)) {
+            return this.config.getDouble(path);
         }
         return 0;
     }
 
-    public String getString(String path) {
-        if (config.contains(path)) {
-            return config.getString(path);
+    public String getString(final String path) {
+        if (this.config.contains(path)) {
+            return this.config.getString(path);
         }
         return "null";
     }
 
-    public Location getLocation(String path) {
-        if (config.contains(path)) {
-            double x = getDouble(path+".x");
-            double y = getDouble(path+".y");
-            double z = getDouble(path+".z");
-            float pitch = (float) getDouble(path+".pitch");
-            float yaw = (float) getDouble(path+".yaw");
-            String world = getString(path+".world");
-            Location loc = new Location(Bukkit.getWorld(world), x, y, z, yaw, pitch);
+    public Location getLocation(final String path) {
+        if (this.config.contains(path)) {
+            final double x = getDouble(path+".x");
+            final double y = getDouble(path+".y");
+            final double z = getDouble(path+".z");
+
+            final float pitch = (float) getDouble(path+".pitch");
+            final float yaw = (float) getDouble(path+".yaw");
+
+            final String world = getString(path+".world");
+            final Location loc = new Location(Bukkit.getWorld(world), x, y, z, yaw, pitch);
+
             loc.setPitch(pitch);
             loc.setYaw(yaw);
             return loc;
@@ -58,9 +61,9 @@ public class SloverHologramData extends Config {
         return new Location(Bukkit.getWorlds().get(0), 0, 0, 0);
     }
 
-    public List getList(String path) {
-        if (config.contains(path)) {
-            return config.getList(path);
+    public List getList(final String path) {
+        if (this.config.contains(path)) {
+            return this.config.getList(path);
         }
         return new ArrayList();
     }

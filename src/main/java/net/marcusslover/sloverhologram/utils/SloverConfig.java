@@ -3,20 +3,20 @@ package net.marcusslover.sloverhologram.utils;
 import net.marcusslover.sloverhologram.SloverHologram;
 
 public class SloverConfig extends Config {
-    public SloverConfig(SloverHologram sloverHologram, String filename) {
+    public SloverConfig(final SloverHologram sloverHologram, final String filename) {
         super(sloverHologram, filename);
     }
 
-    public void set(String path, double value) {
-        config.set(path, value);
-        save();
+    public void set(final String path, final double value) {
+        this.config.set(path, value);
+        this.save();
     }
 
-    public double getDouble(String path, double d) {
-        if (config.contains(path)) {
-            return config.getDouble(path);
+    public double getDouble(final String path, final double d) {
+        if (this.config.contains(path)) {
+            return this.config.getDouble(path);
         } else {
-            set(path, d);
+            this.set(path, d);
         }
         return d;
     }

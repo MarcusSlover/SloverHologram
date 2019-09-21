@@ -8,11 +8,11 @@ public interface Sendable {
      * Sends sendable message to a certain player
      * @param player player the message will be send to
      */
-    void send(Player player);
+    void send(final Player player);
 
     /**
      * Sends sendable message to a certain sender
      * @param sender sender the message will be send to
      */
-    void send(CommandSender sender);
+    void send(final CommandSender sender);
 }

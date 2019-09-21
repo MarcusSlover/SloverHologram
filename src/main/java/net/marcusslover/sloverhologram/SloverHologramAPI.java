@@ -129,6 +129,7 @@ public class SloverHologramAPI {
         }
         List<EntityArmorStand> list = fakeHologram.get(player.getUniqueId());
         List<String> newLines = new ArrayList<>(Arrays.asList(lines));
+
         for (String newLine : newLines) {
             EntityArmorStand entityArmorStand = getHologramLine(loc, newLine);
             PacketPlayOutSpawnEntityLiving packet = new PacketPlayOutSpawnEntityLiving(entityArmorStand);
@@ -174,20 +175,20 @@ public class SloverHologramAPI {
     @SuppressWarnings("unused")
     public void destroyHologram(Player player, int[] ids) {
         List<EntityArmorStand> freshList = new ArrayList<>();
+
         for (Map.Entry<UUID, List<EntityArmorStand>> set : fakeHologram.entrySet()) {
-            if (set.getKey() == player.getUniqueId()) {
+            if (set.getKey().equals(player.getUniqueId())) {
+                freshList.addAll(set.getValue());
+
                 for (EntityArmorStand entityArmorStand : set.getValue()) {
-                    boolean is = false;
                     int id = entityArmorStand.getBukkitEntity().getEntityId();
                     for (int i : ids) {
-                        if (i == id) {
-                            is = true;
+                        if (id == i) {
+                            PacketPlayOutEntityDestroy packet = new PacketPlayOutEntityDestroy(entityArmorStand.getBukkitEntity().getEntityId());
+                            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+                            freshList.remove(entityArmorStand);
+                            break;
                         }
-                    }
-                    if (is) {
-                        PacketPlayOutEntityDestroy packet = new PacketPlayOutEntityDestroy(entityArmorStand.getBukkitEntity().getEntityId());
-                        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
-                        freshList.remove(entityArmorStand);
                     }
                 }
             }

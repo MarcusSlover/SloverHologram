@@ -45,13 +45,7 @@ public final class SloverHologram extends JavaPlugin implements Listener {
 
         this.loadCommand();
         this.loadFiles();
-        new BukkitRunnable() {
-
-            @Override
-            public void run() {
-                loadHolograms();
-            }
-        }.runTaskLater(this, 40L);
+        this.loadHolograms();
 
 
         Bukkit.getPluginManager().registerEvents(new Events(this), this);
@@ -79,10 +73,12 @@ public final class SloverHologram extends JavaPlugin implements Listener {
 
     @SuppressWarnings("unchecked")
     private void loadHolograms() {
-        for (String hologramName : this.getHologramNames()) {
+        for (final String hologramName : this.getHologramNames()) {
+
             Location location = this.sloverHologramData.getLocation("hologram-data."+hologramName+".location");
             List<String> lines = this.sloverHologramData.getList("hologram-data."+hologramName+".lines");
-            Hologram hologram = new Hologram(hologramName, lines, location);
+
+            final Hologram hologram = new Hologram(hologramName, lines, location);
             hologramList.add(hologram);
 
             Bukkit.getOnlinePlayers().forEach(player -> {

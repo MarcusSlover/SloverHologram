@@ -134,6 +134,7 @@ public class Hologram {
                 }
             }
         }
+
         Location loc = this.location.clone();
         double space = SloverHologram.getHologramClass().space();
         if (!entities.containsKey(player.getUniqueId())) {
@@ -158,6 +159,10 @@ public class Hologram {
      */
     public void destroyHologram(final Player player) {
         if (!entities.containsKey(player.getUniqueId())) {
+            return;
+        }
+
+        if (!this.getLocation().getChunk().isLoaded()) {
             return;
         }
 

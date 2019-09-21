@@ -11,7 +11,7 @@ import java.util.List;
 public class Holograms implements HologramEditor {
     private static SloverHologram sloverHologram;
 
-    public Holograms(SloverHologram sloverHologram) {
+    public Holograms(final SloverHologram sloverHologram) {
         Holograms.sloverHologram = sloverHologram;
     }
 
