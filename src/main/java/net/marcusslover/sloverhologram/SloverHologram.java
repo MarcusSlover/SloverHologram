@@ -26,8 +26,8 @@ import java.util.List;
 public final class SloverHologram extends JavaPlugin implements Listener {
 
     //prefix
-    public static String prefix = "&b&lSLOVER HOLOGRAM!";
-    public static List<Hologram> allHologramObjects = new ArrayList<>();
+    public final static String prefix = "&b&lSLOVER HOLOGRAM!";
+    public final static List<Hologram> allHologramObjects = new ArrayList<>();
 
     //api class
     private static SloverHologramAPI hologramAPI;
@@ -45,8 +45,13 @@ public final class SloverHologram extends JavaPlugin implements Listener {
 
         this.loadCommand();
         this.loadFiles();
-        this.loadHolograms();
+        new BukkitRunnable() {
 
+            @Override
+            public void run() {
+                loadHolograms();
+            }
+        }.runTaskLater(this, 10L);
 
         Bukkit.getPluginManager().registerEvents(new Events(this), this);
         Bukkit.getConsoleSender().sendMessage(new Text(prefix+" &7The plugin was &asuccessfully&7 enabled!").toString());

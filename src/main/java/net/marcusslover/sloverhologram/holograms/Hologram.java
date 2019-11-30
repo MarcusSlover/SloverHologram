@@ -128,6 +128,8 @@ public class Hologram {
         for (Map.Entry<UUID, List<EntityArmorStand>> set : entities.entrySet()) {
             if (set.getKey() == player.getUniqueId()) {
                 for (EntityArmorStand entityArmorStand : set.getValue()) {
+
+
                     PacketPlayOutEntityDestroy packet = new PacketPlayOutEntityDestroy(entityArmorStand.getBukkitEntity().getEntityId());
                     ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
                     toRemove.add(entityArmorStand);
