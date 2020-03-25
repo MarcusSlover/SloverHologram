@@ -6,7 +6,6 @@ import net.marcusslover.sloverhologram.holograms.Hologram;
 import net.marcusslover.sloverhologram.holograms.Holograms;
 import net.marcusslover.sloverhologram.utils.SloverConfig;
 import net.marcusslover.sloverhologram.utils.SloverHologramData;
-import net.marcusslover.sloverhologram.utils.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -15,7 +14,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.function.Consumer;
 
 /**
  * A plugin for holograms, based on packets (fake entities)
@@ -26,54 +29,66 @@ import java.util.List;
 public final class SloverHologram extends JavaPlugin implements Listener {
 
     //prefix
-    public final static String prefix = "&b&lSLOVER HOLOGRAM!";
-    public final static List<Hologram> allHologramObjects = new ArrayList<>();
+    public final String prefix = "&b&lSLOVER HOLOGRAM!";
 
-    //api class
+    public final Collection<Hologram> allHologramObjects = new ArrayList<>();
+    private final ExecutorService executorService = Executors.newCachedThreadPool();
     private static SloverHologramAPI hologramAPI;
 
-    public SloverHologramData sloverHologramData;
-    public static List<Hologram> hologramList;
+    //collection of all manually made holograms (not by code)
+    public Collection<Hologram> hologramList;
+
+    //config instance
     public SloverConfig sloverConfig;
-    private static Holograms hologramClass;
+    //holograms data instance
+    public SloverHologramData sloverHologramData;
+
+    //management class
+    private Holograms hologramClass;
+
+    //instance of the main class
+    private static SloverHologram sloverHologram;
 
     @Override
     public void onEnable() {
-        hologramClass = new Holograms(this);
-        hologramList = new ArrayList<>();
-        hologramAPI = new SloverHologramAPI();
+        sloverHologram = this;
+        hologramClass =  new Holograms();
 
-        this.loadCommand();
-        this.loadFiles();
-        new BukkitRunnable() {
+        this.loadFiles(s -> {
+            //show the holograms
+            new BukkitRunnable() {
 
-            @Override
-            public void run() {
-                loadHolograms();
-            }
-        }.runTaskLater(this, 10L);
+                @Override
+                public void run() {
+                    loadHolograms();
+                }
+            }.runTaskLater(getSloverHologram(), 5L);
+        });
 
+        //register command
+        getCommand("sloverhologram").setExecutor(new SloverHologramCommand(this));
+
+        //events
         Bukkit.getPluginManager().registerEvents(new Events(this), this);
-        Bukkit.getConsoleSender().sendMessage(new Text(prefix+" &7The plugin was &asuccessfully&7 enabled!").toString());
+        getLogger().info("The plugin was successfully enabled!");
     }
 
     @Override
     public void onDisable() {
         this.unloadHolograms();
-        Bukkit.getConsoleSender().sendMessage(new Text(prefix+" &7Plugin was &asuccessfully&7 disabled!").toString());
-    }
-
-    private void loadCommand() {
-        this.getCommand("sloverhologram").setExecutor(new SloverHologramCommand(this));
+        getLogger().info("The plugin was successfully disabled!");
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void loadFiles() {
-        if (!this.getDataFolder().exists()) {
-            this.getDataFolder().mkdirs();
-        }
-        this.sloverHologramData = new SloverHologramData(this, "data.yml");
-        this.sloverConfig = new SloverConfig(this, "config.yml");
+    private void loadFiles(Consumer<String> consumer) {
+        executorService.execute(() -> {
+            if (!this.getDataFolder().exists()) {
+                this.getDataFolder().mkdirs();
+            }
+            this.sloverHologramData = new SloverHologramData(this, "data.yml");
+            this.sloverConfig = new SloverConfig(this, "config.yml");
+            consumer.accept("");
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -86,10 +101,13 @@ public final class SloverHologram extends JavaPlugin implements Listener {
             final Hologram hologram = new Hologram(hologramName, lines, location);
             hologramList.add(hologram);
 
-            Bukkit.getOnlinePlayers().forEach(player -> {
-                hologramList.forEach(h -> h.destroyHologram(player));
-                hologramList.forEach(h -> h.show(player));
-            });
+            if (Bukkit.getOnlinePlayers().size() > 0) {
+
+                Bukkit.getOnlinePlayers().forEach(player -> {
+                    hologramList.forEach(h -> h.destroyHologram(player));
+                    hologramList.forEach(h -> h.show(player));
+                });
+            }
         }
     }
 
@@ -119,7 +137,7 @@ public final class SloverHologram extends JavaPlugin implements Listener {
      * A method which returns the {@link Holograms} class.
      * @return an instance of the {@link Holograms} class
      */
-    public static Holograms getHologramClass() {
+    public Holograms getHologramClass() {
         return hologramClass;
     }
 
@@ -127,7 +145,7 @@ public final class SloverHologram extends JavaPlugin implements Listener {
      * A method which adds a hologram to global objects
      * @param hologram the hologram
      */
-    public static void addHologramObject(Hologram hologram) {
+    public void addHologramObject(Hologram hologram) {
         allHologramObjects.add(hologram);
     }
 
@@ -138,5 +156,13 @@ public final class SloverHologram extends JavaPlugin implements Listener {
     @SuppressWarnings("WeakerAccess")
     public static SloverHologramAPI getAPI() {
         return hologramAPI;
+    }
+
+    /**
+     * A method which returns instance of the main class
+     * @return instance of the main class
+     */
+    public static SloverHologram getSloverHologram() {
+        return sloverHologram;
     }
 }

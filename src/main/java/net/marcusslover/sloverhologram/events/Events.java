@@ -44,19 +44,19 @@ public class Events implements Listener {
     public void onQuit(final PlayerQuitEvent e) {
         final Player player = e.getPlayer();
 
-        for (final Hologram h : SloverHologram.hologramList) {
+        for (final Hologram h : sloverHologram.hologramList) {
             h.destroyHologram(player);
         }
     }
 
     private void updateHolograms(final Player player) {
-        SloverHologram.hologramList.forEach(h -> h.destroyHologram(player));
+        sloverHologram.hologramList.forEach(h -> h.destroyHologram(player));
 
         new BukkitRunnable() {
             @Override
             public void run() {
 
-                for (final Hologram h : SloverHologram.hologramList) {
+                for (final Hologram h : sloverHologram.hologramList) {
                     if (!h.entities.containsKey(player.getUniqueId())) {
                         h.show(player);
                     }

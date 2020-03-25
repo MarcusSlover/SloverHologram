@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Holograms implements HologramEditor {
-    private static SloverHologram sloverHologram;
+    private final SloverHologram sloverHologram;
 
-    public Holograms(final SloverHologram sloverHologram) {
-        Holograms.sloverHologram = sloverHologram;
+    public Holograms() {
+        sloverHologram = SloverHologram.getSloverHologram();
     }
 
     @Override
@@ -31,7 +31,7 @@ public class Holograms implements HologramEditor {
         sloverHologram.sloverHologramData.set("hologram-list", list);
         sloverHologram.sloverHologramData.set("hologram-data."+name+".lines", lines);
         sloverHologram.sloverHologramData.set("hologram-data."+name+".location", location);
-        SloverHologram.hologramList.add(hologram);
+        sloverHologram.hologramList.add(hologram);
         for (Player player : Bukkit.getOnlinePlayers()) {
             hologram.show(player);
         }
@@ -40,7 +40,7 @@ public class Holograms implements HologramEditor {
     @Override
     public void delete(final String name) {
         Hologram holo = null;
-        for (Hologram hologram : SloverHologram.hologramList) {
+        for (Hologram hologram : sloverHologram.hologramList) {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 holo = hologram;
                 List<String> list = sloverHologram.getHologramNames();
@@ -48,7 +48,7 @@ public class Holograms implements HologramEditor {
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     hologram.remove(player);
                 }
-                SloverHologram.allHologramObjects.remove(hologram);
+                sloverHologram.allHologramObjects.remove(hologram);
                 sloverHologram.sloverHologramData.set("hologram-list", list);
                 sloverHologram.sloverHologramData.config.set("hologram-data."+name+".lines", null);
                 sloverHologram.sloverHologramData.config.set("hologram-data." + name + ".location", null);
@@ -56,7 +56,7 @@ public class Holograms implements HologramEditor {
             }
         }
         if (holo != null) {
-            SloverHologram.hologramList.remove(holo);
+            sloverHologram.hologramList.remove(holo);
         }
     }
 
@@ -64,7 +64,7 @@ public class Holograms implements HologramEditor {
     public void addLine(final String name, final StringBuilder value) {
         String newValue = value.toString();
         newValue = newValue.substring(0, newValue.length() - 1);
-        for (Hologram hologram : SloverHologram.hologramList) {
+        for (Hologram hologram : sloverHologram.hologramList) {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 List<String> lines = hologram.getLines();
                 lines.add(newValue);
@@ -81,7 +81,7 @@ public class Holograms implements HologramEditor {
     public void setLine(final String name, final int i, final StringBuilder value) {
         String newValue = value.toString();
         newValue = newValue.substring(0, newValue.length() - 1);
-        for (Hologram hologram : SloverHologram.hologramList) {
+        for (Hologram hologram : sloverHologram.hologramList) {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 List<String> lines = hologram.getLines();
                 lines.set(i - 1, newValue);
@@ -96,7 +96,7 @@ public class Holograms implements HologramEditor {
 
     @Override
     public void teleport(final String name, final Location location) {
-        for (Hologram hologram : SloverHologram.hologramList) {
+        for (Hologram hologram : sloverHologram.hologramList) {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 hologram.setLocation(location);
                 sloverHologram.sloverHologramData.set("hologram-data."+name+".location", location);
@@ -109,7 +109,7 @@ public class Holograms implements HologramEditor {
 
     @Override
     public void teleportPlayer(final String name, final Player player) {
-        for (Hologram hologram : SloverHologram.hologramList) {
+        for (Hologram hologram : sloverHologram.hologramList) {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 if (!hologram.getChunk().isLoaded()) {
                     hologram.getChunk().load();
@@ -122,7 +122,7 @@ public class Holograms implements HologramEditor {
 
     @Override
     public void removeLine(final String name, final int value) {
-        for (Hologram hologram : SloverHologram.hologramList) {
+        for (Hologram hologram : sloverHologram.hologramList) {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 List<String> lines = hologram.getLines();
                 lines.remove(value - 1);
@@ -137,7 +137,7 @@ public class Holograms implements HologramEditor {
 
     @Override
     public int size(final String name) {
-        for (Hologram hologram : SloverHologram.hologramList) {
+        for (Hologram hologram : sloverHologram.hologramList) {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 return hologram.getLines().size();
             }

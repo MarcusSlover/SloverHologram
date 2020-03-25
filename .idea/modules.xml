@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SloverHologram.iml" filepath="$PROJECT_DIR$/SloverHologram.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/SloverHologram.iml" filepath="$PROJECT_DIR$/.idea/SloverHologram.iml" />
     </modules>
   </component>
 </project>

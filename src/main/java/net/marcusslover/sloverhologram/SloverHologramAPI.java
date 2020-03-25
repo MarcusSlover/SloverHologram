@@ -15,11 +15,13 @@ import java.util.*;
 
 public class SloverHologramAPI {
     private final Holograms holograms;
+    private final SloverHologram instance;
     @SuppressWarnings("WeakerAccess")
     public Map<UUID, List<EntityArmorStand>> fakeHologram = new HashMap<>();
 
     SloverHologramAPI() {
-        this.holograms = SloverHologram.getHologramClass();
+        this.instance = SloverHologram.getSloverHologram();
+        this.holograms = instance.getHologramClass();
     }
 
     /**
@@ -33,7 +35,7 @@ public class SloverHologramAPI {
     public void updateHologram(Player player, String name, String[] lines) {
         List<String> newLines = new ArrayList<>(Arrays.asList(lines));
         if (this.holograms.exists(name)) {
-            for (Hologram hologram : SloverHologram.allHologramObjects) {
+            for (Hologram hologram : instance.allHologramObjects) {
                 if (hologram.getName().equalsIgnoreCase(name)) {
                     if (hologram.entities.containsKey(player.getUniqueId())) {
                         hologram.remove(player);
@@ -55,7 +57,7 @@ public class SloverHologramAPI {
     @SuppressWarnings("unused")
     public void setHologramLine(String name, int i, String line) {
         if (this.holograms.exists(name)) {
-            this.holograms.setLine(name, i, new StringBuilder(line));
+            this.holograms.setLine(name, i, new StringBuilder(line+" "));
         }
     }
 

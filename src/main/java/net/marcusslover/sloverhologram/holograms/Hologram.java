@@ -15,6 +15,8 @@ import java.util.*;
 
 @SuppressWarnings("WeakerAccess")
 public class Hologram {
+    private static SloverHologram instance = SloverHologram.getSloverHologram();
+
     private final String name;
     private List<String> lines;
     private Location location;
@@ -32,7 +34,7 @@ public class Hologram {
         this.lines = lines;
         this.location = location;
         this.chunk = location.getChunk();
-        SloverHologram.addHologramObject(this);
+        instance.addHologramObject(this);
     }
 
     /**
@@ -138,7 +140,7 @@ public class Hologram {
         }
 
         Location loc = this.location.clone();
-        double space = SloverHologram.getHologramClass().space();
+        double space = instance.getHologramClass().space();
         if (!entities.containsKey(player.getUniqueId())) {
             entities.put(player.getUniqueId(), new ArrayList<>());
         }

@@ -6,12 +6,38 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="420f1667-6a22-41aa-8682-5c4c989e9b63" name="Default Changelist" comment="" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <list default="true" id="420f1667-6a22-41aa-8682-5c4c989e9b63" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/server.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/spigot_1_12_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/spigot_1_12_2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/SloverHologram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/SloverHologram.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/SloverHologramAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/SloverHologramAPI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/command/SloverHologramCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/command/SloverHologramCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/events/Events.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/events/Events.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/holograms/Hologram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/holograms/Hologram.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/holograms/Holograms.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/holograms/Holograms.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
   </component>
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
@@ -68,14 +94,21 @@
     </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="add_unversioned_files" value="true" />
+    <property name="aspect.path.notification.shown" value="true" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/SloverTeam/Code/spigot-1.12.2.jar!/" />
     <property name="project.structure.last.edited" value="Libraries" />
-    <property name="project.structure.proportion" value="0.15234375" />
-    <property name="project.structure.side.proportion" value="0.51839083" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="settings.github" />
   </component>
   <component name="RecentsManager">
@@ -91,18 +124,6 @@
     <key name="CreateClassDialog.RecentsKey">
       <recent name="net.marcusslover.sloverhologram.utils" />
     </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager">
     <configuration name="SloverHologram build" type="MavenRunConfiguration" factoryName="Maven">
@@ -142,6 +163,10 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1544307979355</updated>
+      <workItem from="1575103987056" duration="447000" />
+      <workItem from="1577377339762" duration="843000" />
+      <workItem from="1577657555521" duration="269000" />
+      <workItem from="1585160809675" duration="1003000" />
     </task>
     <task id="LOCAL-00001" summary="Test">
       <created>1544559208073</created>
@@ -239,12 +264,17 @@
       <is-autoscroll-to-source value="true" />
     </todo-panel>
   </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
@@ -264,105 +294,5 @@
     <MESSAGE value="+ Added reflection for future&#10;* Bug fixes" />
     <option name="LAST_COMMIT_MESSAGE" value="+ Added reflection for future&#10;* Bug fixes" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor />
-          <last-edited>SloverHologram:jar</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.51839083" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <last-edited>Minecraft</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <last-edited>Maven: com.google.guava:guava:21.0</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <last-edited>1.8 (2)</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <last-edited>SloverHologram</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.51839083" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectJDKs.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <last-edited>server</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.51839083" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ScopeChooserConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.51839083" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>
