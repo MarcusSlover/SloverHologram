@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="SloverHologram:jar">
-    <output-path>$USER_HOME$/Desktop/SloverTeam Network Utils</output-path>
+  <artifact type="jar" build-on-make="true" name="SloverHologram:jar">
+    <output-path>$USER_HOME$/Desktop/SloverTeam/Plugins</output-path>
     <root id="archive" name="SloverHologram.jar">
       <element id="module-output" name="SloverHologram" />
     </root>

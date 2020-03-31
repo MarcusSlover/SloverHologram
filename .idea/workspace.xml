@@ -7,18 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="420f1667-6a22-41aa-8682-5c4c989e9b63" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/server.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/spigot_1_12_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/spigot_1_12_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/SloverHologram_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/SloverHologram_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/SloverHologram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/SloverHologram.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/SloverHologramAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/SloverHologramAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/command/SloverHologramCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/command/SloverHologramCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/events/Events.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/events/Events.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/holograms/Hologram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/holograms/Hologram.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/holograms/Holograms.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/holograms/Holograms.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,21 +40,6 @@
         <option value="Class" />
       </list>
     </option>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>§</find>
-      <find>Holograms</find>
-      <find>config</find>
-    </findStrings>
-    <replaceStrings>
-      <replace />
-      <replace>this.holograms</replace>
-      <replace>this.config</replace>
-    </replaceStrings>
-    <dirStrings>
-      <dir>$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram</dir>
-    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -105,8 +80,14 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/SloverTeam/Code/spigot-1.12.2.jar!/" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/SloverTeam/Plugins" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="settings.github" />
@@ -166,7 +147,8 @@
       <workItem from="1575103987056" duration="447000" />
       <workItem from="1577377339762" duration="843000" />
       <workItem from="1577657555521" duration="269000" />
-      <workItem from="1585160809675" duration="1003000" />
+      <workItem from="1585160809675" duration="1864000" />
+      <workItem from="1585616949224" duration="311000" />
     </task>
     <task id="LOCAL-00001" summary="Test">
       <created>1544559208073</created>
@@ -252,7 +234,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575103394105</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="* Improved and fixed very old code">
+      <created>1585161845780</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1585161845780</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TodoView">
@@ -292,7 +281,26 @@
     <MESSAGE value="Fixed critical issues" />
     <MESSAGE value="* Optimized some of the code&#10;* Made the code more fancier" />
     <MESSAGE value="+ Added reflection for future&#10;* Bug fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="+ Added reflection for future&#10;* Bug fixes" />
+    <MESSAGE value="* Improved and fixed very old code" />
+    <option name="LAST_COMMIT_MESSAGE" value="* Improved and fixed very old code" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="571" y="102" key="CommitChangelistDialog2" timestamp="1585161843562">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="571" y="102" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1585161843562" />
+    <state x="818" y="199" key="FileChooserDialogImpl" timestamp="1585617046256">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="818" y="199" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1585617046256" />
+    <state x="440" y="0" key="SettingsEditor" timestamp="1585617048214">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="440" y="0" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1585617048214" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1585161847002">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1585161847002" />
   </component>
 </project>
