@@ -7,7 +7,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="420f1667-6a22-41aa-8682-5c4c989e9b63" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/SloverHologram_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/SloverHologram_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -149,6 +148,7 @@
       <workItem from="1577657555521" duration="269000" />
       <workItem from="1585160809675" duration="1864000" />
       <workItem from="1585616949224" duration="311000" />
+      <workItem from="1585617581570" duration="285000" />
     </task>
     <task id="LOCAL-00001" summary="Test">
       <created>1544559208073</created>
@@ -241,7 +241,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585161845780</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="* Fixed error while loading the plugin">
+      <created>1585617849221</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1585617849221</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TodoView">
@@ -282,14 +289,19 @@
     <MESSAGE value="* Optimized some of the code&#10;* Made the code more fancier" />
     <MESSAGE value="+ Added reflection for future&#10;* Bug fixes" />
     <MESSAGE value="* Improved and fixed very old code" />
-    <option name="LAST_COMMIT_MESSAGE" value="* Improved and fixed very old code" />
+    <MESSAGE value="* Fixed error while loading the plugin" />
+    <option name="LAST_COMMIT_MESSAGE" value="* Fixed error while loading the plugin" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="571" y="102" key="CommitChangelistDialog2" timestamp="1585161843562">
+    <state x="571" y="86" key="CommitChangelistDialog2" timestamp="1585617847107">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="571" y="102" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1585161843562" />
+    <state x="571" y="86" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1585617847107" />
+    <state x="289" y="129" key="DiffContextDialog" timestamp="1585617832888">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="289" y="129" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585617832888" />
     <state x="818" y="199" key="FileChooserDialogImpl" timestamp="1585617046256">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -298,9 +310,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="440" y="0" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1585617048214" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1585161847002">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1585617851851">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1585161847002" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1585617851851" />
   </component>
 </project>
