@@ -54,8 +54,8 @@ public final class SloverHologram extends JavaPlugin implements Listener {
         sloverHologram = this;
 
         hologramList = new ArrayList<>();
-        hologramAPI = new SloverHologramAPI();
         hologramClass =  new Holograms();
+        hologramAPI = new SloverHologramAPI();
 
         this.loadFiles(s -> {
             //show the holograms
