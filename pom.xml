@@ -6,7 +6,7 @@
 
     <groupId>net.MarcusSlover.SloverHologram</groupId>
     <artifactId>SloverHologram</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>3.0-Release</version>
     <packaging>jar</packaging>
 
     <name>SloverHologram</name>

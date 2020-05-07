@@ -7,19 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="420f1667-6a22-41aa-8682-5c4c989e9b63" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/api/SloverHologramAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/SloverHologram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/SloverHologram.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/SloverHologramAPI.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/command/SloverHologramCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/command/SloverHologramCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/events/Events.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/event/Events.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/holograms/Hologram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/hologram/Hologram.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/holograms/HologramEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/hologram/HologramEditor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/holograms/Holograms.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/hologram/HologramManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/utils/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/data/Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/utils/SloverConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/data/SloverConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/utils/SloverHologramData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/data/SloverHologramData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/net/marcusslover/sloverhologram/holograms/HologramsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/net/marcusslover/sloverhologram/hologram/HologramsTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +84,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Global Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="settings.github" />
@@ -166,7 +154,7 @@
       <workItem from="1588873111748" duration="310000" />
       <workItem from="1588874292158" duration="146000" />
       <workItem from="1588874610761" duration="694000" />
-      <workItem from="1588877052992" duration="6077000" />
+      <workItem from="1588877052992" duration="6597000" />
     </task>
     <task id="LOCAL-00001" summary="Test">
       <created>1544559208073</created>
@@ -308,7 +296,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588875159480</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="* Fixed many bugs&#10;* Improved code and optimized it&#10;+ Fresh and clean API methods&#10;+ New type of a hologram -&gt; Custom&#10;* Re-located classes and packages&#10;- Old and bad methods">
+      <created>1588883376527</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1588883376527</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TodoView">
@@ -353,7 +348,8 @@
     <MESSAGE value="+ New API features" />
     <MESSAGE value="* Fixed a critical bug in the API" />
     <MESSAGE value="* Fixed bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="* Fixed bugs" />
+    <MESSAGE value="* Fixed many bugs&#10;* Improved code and optimized it&#10;+ Fresh and clean API methods&#10;+ New type of a hologram -&gt; Custom&#10;* Re-located classes and packages&#10;- Old and bad methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="* Fixed many bugs&#10;* Improved code and optimized it&#10;+ Fresh and clean API methods&#10;+ New type of a hologram -&gt; Custom&#10;* Re-located classes and packages&#10;- Old and bad methods" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WindowStateProjectService">
@@ -365,10 +361,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="12" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1588880092043" />
-    <state x="571" y="12" key="CommitChangelistDialog2" timestamp="1588875154277">
+    <state x="571" y="12" key="CommitChangelistDialog2" timestamp="1588883372832">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="571" y="12" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1588875154277" />
+    <state x="571" y="12" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1588883372832" />
     <state x="289" y="129" key="DiffContextDialog" timestamp="1588855207733">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -377,14 +373,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="818" y="199" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1585617046256" />
-    <state x="440" y="0" key="SettingsEditor" timestamp="1585617048214">
+    <state x="440" y="0" key="SettingsEditor" timestamp="1588883596308">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="440" y="0" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1585617048214" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1588875162433">
+    <state x="440" y="0" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1588883596308" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1588883384405">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588875162433" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588883384405" />
     <state x="624" y="223" key="extract.method.dialog" timestamp="1588855144403">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
