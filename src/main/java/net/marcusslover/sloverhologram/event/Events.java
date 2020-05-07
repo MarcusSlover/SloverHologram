@@ -1,7 +1,6 @@
-package net.marcusslover.sloverhologram.events;
+package net.marcusslover.sloverhologram.event;
 
 import net.marcusslover.sloverhologram.SloverHologram;
-import net.marcusslover.sloverhologram.holograms.Hologram;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -44,23 +43,26 @@ public class Events implements Listener {
     public void onQuit(final PlayerQuitEvent e) {
         final Player player = e.getPlayer();
 
-        for (final Hologram h : sloverHologram.hologramList) {
-            h.destroyHologram(player);
-        }
+        sloverHologram.hologramList.forEach(h -> h.remove(player));
+        sloverHologram.getAPI().getHologramMap().forEach((name, hologram) -> hologram.remove(player));
     }
 
     private void updateHolograms(final Player player) {
-        sloverHologram.hologramList.forEach(h -> h.destroyHologram(player));
-
         new BukkitRunnable() {
             @Override
             public void run() {
-
-                for (final Hologram h : sloverHologram.hologramList) {
-                    if (!h.entities.containsKey(player.getUniqueId())) {
-                        h.show(player);
+                sloverHologram.hologramList.forEach(hologram -> {
+                    hologram.remove(player);
+                    if (!hologram.getEntities().containsKey(player.getUniqueId())) {
+                        hologram.show(player);
                     }
-                }
+                });
+                sloverHologram.getAPI().getHologramMap().forEach((name, hologram) -> {
+                    hologram.remove(player);
+                    if (!hologram.getEntities().containsKey(player.getUniqueId())) {
+                        hologram.show(player);
+                    }
+                });
             }
         }.runTaskLater(sloverHologram, 5L);
     }

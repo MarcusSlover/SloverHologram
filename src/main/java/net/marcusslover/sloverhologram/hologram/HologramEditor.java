@@ -1,10 +1,10 @@
-package net.marcusslover.sloverhologram.holograms;
+package net.marcusslover.sloverhologram.hologram;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 /**
- * An interface created for the {@link net.marcusslover.sloverhologram.holograms.Holograms} class.
+ * An interface created for the {@link HologramManager} class.
  * Can be used for multiple classes and storage.
  */
 public interface HologramEditor {

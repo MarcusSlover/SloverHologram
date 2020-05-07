@@ -1,14 +1,14 @@
 package net.marcusslover.sloverhologram;
 
+import net.marcusslover.sloverhologram.api.SloverHologramAPI;
 import net.marcusslover.sloverhologram.command.SloverHologramCommand;
-import net.marcusslover.sloverhologram.events.Events;
-import net.marcusslover.sloverhologram.holograms.Hologram;
-import net.marcusslover.sloverhologram.holograms.Holograms;
-import net.marcusslover.sloverhologram.utils.SloverConfig;
-import net.marcusslover.sloverhologram.utils.SloverHologramData;
+import net.marcusslover.sloverhologram.data.SloverConfig;
+import net.marcusslover.sloverhologram.data.SloverHologramData;
+import net.marcusslover.sloverhologram.event.Events;
+import net.marcusslover.sloverhologram.hologram.Hologram;
+import net.marcusslover.sloverhologram.hologram.HologramManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -30,12 +30,12 @@ public final class SloverHologram extends JavaPlugin implements Listener {
 
     //prefix
     public final String prefix = "&b&lSLOVER HOLOGRAM!";
-
-    public final Collection<Hologram> allHologramObjects = new ArrayList<>();
     private final ExecutorService executorService = Executors.newCachedThreadPool();
-    private static SloverHologramAPI hologramAPI;
 
-    //collection of all manually made holograms (not by code)
+    //the api of the plugin
+    private SloverHologramAPI hologramAPI;
+
+    //collection of all proper holograms
     public Collection<Hologram> hologramList;
 
     //config instance
@@ -44,17 +44,18 @@ public final class SloverHologram extends JavaPlugin implements Listener {
     public SloverHologramData sloverHologramData;
 
     //management class
-    private Holograms hologramClass;
+    private HologramManager hologramManager;
 
     //instance of the main class
     private static SloverHologram sloverHologram;
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void onEnable() {
         sloverHologram = this;
 
         hologramList = new ArrayList<>();
-        hologramClass =  new Holograms();
+        hologramManager =  new HologramManager();
         hologramAPI = new SloverHologramAPI();
 
         if (!this.getDataFolder().exists()) {
@@ -69,7 +70,7 @@ public final class SloverHologram extends JavaPlugin implements Listener {
                 public void run() {
                     loadHolograms();
                 }
-            }.runTaskLater(getSloverHologram(), 5L);
+            }.runTaskLater(sloverHologram, 5L);
         });
 
         //register command
@@ -86,7 +87,6 @@ public final class SloverHologram extends JavaPlugin implements Listener {
         getLogger().info("The plugin was successfully disabled!");
     }
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void loadFiles(Consumer<String> consumer) {
         executorService.execute(() -> {
             this.sloverHologramData = new SloverHologramData(this, "data.yml");
@@ -102,30 +102,22 @@ public final class SloverHologram extends JavaPlugin implements Listener {
             Location location = this.sloverHologramData.getLocation("hologram-data."+hologramName+".location");
             List<String> lines = this.sloverHologramData.getList("hologram-data."+hologramName+".lines");
 
-            final Hologram hologram = new Hologram(hologramName, lines, location);
+            final Hologram hologram = new Hologram(hologramName, lines, location, false);
             hologramList.add(hologram);
 
             if (Bukkit.getOnlinePlayers().size() > 0) {
-
                 Bukkit.getOnlinePlayers().forEach(player -> {
-                    hologramList.forEach(h -> h.destroyHologram(player));
-                    hologramList.forEach(h -> h.show(player));
+                    hologram.remove(player);
+                    hologram.show(player);
                 });
             }
         }
     }
 
     private void unloadHolograms() {
-        for (Hologram hologram : allHologramObjects) {
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                hologram.remove(player);
-            }
-        }
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            if (getAPI().fakeHologram.containsKey(player.getUniqueId())) {
-                getAPI().destroyHolograms(player);
-            }
-        }
+        hologramList.forEach(hologram -> Bukkit.getOnlinePlayers().forEach(hologram::remove));
+        hologramAPI.getHologramMap().forEach((uuid, hologram) -> Bukkit.getOnlinePlayers().forEach(hologram::remove));
+
     }
 
     /**
@@ -138,27 +130,18 @@ public final class SloverHologram extends JavaPlugin implements Listener {
     }
 
     /**
-     * A method which returns the {@link Holograms} class.
-     * @return an instance of the {@link Holograms} class
+     * A method which returns the {@link HologramManager} class.
+     * @return an instance of the {@link HologramManager} class
      */
-    public Holograms getHologramClass() {
-        return hologramClass;
-    }
-
-    /**
-     * A method which adds a hologram to global objects
-     * @param hologram the hologram
-     */
-    public void addHologramObject(Hologram hologram) {
-        allHologramObjects.add(hologram);
+    public HologramManager getHologramManager() {
+        return hologramManager;
     }
 
     /**
      * A method which returns api class
      * @return api class
      */
-    @SuppressWarnings("WeakerAccess")
-    public static SloverHologramAPI getAPI() {
+    public SloverHologramAPI getAPI() {
         return hologramAPI;
     }
 
@@ -166,7 +149,7 @@ public final class SloverHologram extends JavaPlugin implements Listener {
      * A method which returns instance of the main class
      * @return instance of the main class
      */
-    public static SloverHologram getSloverHologram() {
+    public static SloverHologram getInstance() {
         return sloverHologram;
     }
 }

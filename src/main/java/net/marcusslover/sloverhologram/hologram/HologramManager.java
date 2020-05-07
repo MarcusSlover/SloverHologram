@@ -1,4 +1,4 @@
-package net.marcusslover.sloverhologram.holograms;
+package net.marcusslover.sloverhologram.hologram;
 
 import net.marcusslover.sloverhologram.SloverHologram;
 import org.bukkit.Bukkit;
@@ -8,35 +8,31 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Holograms implements HologramEditor {
-    private final SloverHologram sloverHologram;
-
-    public Holograms() {
-        sloverHologram = SloverHologram.getSloverHologram();
-    }
+public class HologramManager implements HologramEditor {
+    private final SloverHologram plugin = SloverHologram.getInstance();
 
     @Override
     public boolean exists(final String name) {
-        List<String> list = sloverHologram.getHologramNames();
+        List<String> list = plugin.getHologramNames();
         return list.contains(name);
     }
 
     @Override
     public void create(final String name, final Location location, final String value) {
         List<String> lines = new ArrayList<>();
-        List<String> list = sloverHologram.getHologramNames();
+        List<String> list = plugin.getHologramNames();
         if (list.contains(name)) {
             return;
         }
 
         lines.add(value);
-        Hologram hologram = new Hologram(name, lines, location);
+        Hologram hologram = new Hologram(name, lines, location, false);
 
         list.add(name);
-        sloverHologram.sloverHologramData.set("hologram-list", list);
-        sloverHologram.sloverHologramData.set("hologram-data."+name+".lines", lines);
-        sloverHologram.sloverHologramData.set("hologram-data."+name+".location", location);
-        sloverHologram.hologramList.add(hologram);
+        plugin.sloverHologramData.set("hologram-list", list);
+        plugin.sloverHologramData.set("hologram-data."+name+".lines", lines);
+        plugin.sloverHologramData.set("hologram-data."+name+".location", location);
+        plugin.hologramList.add(hologram);
         for (Player player : Bukkit.getOnlinePlayers()) {
             hologram.show(player);
         }
@@ -45,25 +41,24 @@ public class Holograms implements HologramEditor {
     @Override
     public void delete(final String name) {
         Hologram holo = null;
-        for (Hologram hologram : sloverHologram.hologramList) {
+        for (Hologram hologram : plugin.hologramList) {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 holo = hologram;
-                List<String> list = sloverHologram.getHologramNames();
+                List<String> list = plugin.getHologramNames();
 
                 list.remove(name);
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     hologram.remove(player);
                 }
-                sloverHologram.allHologramObjects.remove(hologram);
-                sloverHologram.sloverHologramData.set("hologram-list", list);
-                sloverHologram.sloverHologramData.config.set("hologram-data."+name+".lines", null);
-                sloverHologram.sloverHologramData.config.set("hologram-data." + name + ".location", null);
-                sloverHologram.sloverHologramData.save();
+                plugin.sloverHologramData.set("hologram-list", list);
+                plugin.sloverHologramData.config.set("hologram-data."+name+".lines", null);
+                plugin.sloverHologramData.config.set("hologram-data." + name + ".location", null);
+                plugin.sloverHologramData.save();
                 break;
             }
         }
         if (holo != null) {
-            sloverHologram.hologramList.remove(holo);
+            plugin.hologramList.remove(holo);
         }
     }
 
@@ -71,12 +66,12 @@ public class Holograms implements HologramEditor {
     public void addLine(final String name, final StringBuilder value) {
         String newValue = value.toString();
         newValue = newValue.substring(0, newValue.length() - 1);
-        for (Hologram hologram : sloverHologram.hologramList) {
+        for (Hologram hologram : plugin.hologramList) {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 List<String> lines = hologram.getLines();
                 lines.add(newValue);
                 hologram.setLines(lines);
-                sloverHologram.sloverHologramData.set("hologram-data."+name+".lines", lines);
+                plugin.sloverHologramData.set("hologram-data."+name+".lines", lines);
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     hologram.show(player);
                 }
@@ -88,12 +83,12 @@ public class Holograms implements HologramEditor {
     public void setLine(final String name, final int i, final StringBuilder value) {
         String newValue = value.toString();
         newValue = newValue.substring(0, newValue.length() - 1);
-        for (Hologram hologram : sloverHologram.hologramList) {
+        for (Hologram hologram : plugin.hologramList) {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 List<String> lines = hologram.getLines();
                 lines.set(i - 1, newValue);
                 hologram.setLines(lines);
-                sloverHologram.sloverHologramData.set("hologram-data."+name+".lines", lines);
+                plugin.sloverHologramData.set("hologram-data."+name+".lines", lines);
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     hologram.show(player);
                 }
@@ -103,10 +98,10 @@ public class Holograms implements HologramEditor {
 
     @Override
     public void teleport(final String name, final Location location) {
-        for (Hologram hologram : sloverHologram.hologramList) {
+        for (Hologram hologram : plugin.hologramList) {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 hologram.setLocation(location);
-                sloverHologram.sloverHologramData.set("hologram-data."+name+".location", location);
+                plugin.sloverHologramData.set("hologram-data."+name+".location", location);
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     hologram.show(player);
                 }
@@ -116,7 +111,7 @@ public class Holograms implements HologramEditor {
 
     @Override
     public void teleportPlayer(final String name, final Player player) {
-        for (Hologram hologram : sloverHologram.hologramList) {
+        for (Hologram hologram : plugin.hologramList) {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 if (!hologram.getChunk().isLoaded()) {
                     hologram.getChunk().load();
@@ -129,12 +124,12 @@ public class Holograms implements HologramEditor {
 
     @Override
     public void removeLine(final String name, final int value) {
-        for (Hologram hologram : sloverHologram.hologramList) {
+        for (Hologram hologram : plugin.hologramList) {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 List<String> lines = hologram.getLines();
                 lines.remove(value - 1);
                 hologram.setLines(lines);
-                sloverHologram.sloverHologramData.set("hologram-data."+name+".lines", lines);
+                plugin.sloverHologramData.set("hologram-data."+name+".lines", lines);
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     hologram.show(player);
                 }
@@ -144,7 +139,7 @@ public class Holograms implements HologramEditor {
 
     @Override
     public int size(final String name) {
-        for (Hologram hologram : sloverHologram.hologramList) {
+        for (Hologram hologram : plugin.hologramList) {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 return hologram.getLines().size();
             }
@@ -154,7 +149,7 @@ public class Holograms implements HologramEditor {
 
     @Override
     public double space() {
-        return sloverHologram.sloverConfig.getDouble("hologram-space", 0.4d);
+        return plugin.sloverConfig.getDouble("hologram-space", 0.4d);
     }
 
 }

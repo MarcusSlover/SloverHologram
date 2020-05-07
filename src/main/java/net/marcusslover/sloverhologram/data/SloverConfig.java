@@ -1,4 +1,4 @@
-package net.marcusslover.sloverhologram.utils;
+package net.marcusslover.sloverhologram.data;
 
 import net.marcusslover.sloverhologram.SloverHologram;
 

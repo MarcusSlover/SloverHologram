@@ -1,10 +1,12 @@
-package net.marcusslover.sloverhologram.holograms;
+package net.marcusslover.sloverhologram.hologram;
 
 import net.marcusslover.sloverhologram.SloverHologram;
 import net.minecraft.server.v1_12_R1.EntityArmorStand;
 import net.minecraft.server.v1_12_R1.PacketPlayOutEntityDestroy;
 import net.minecraft.server.v1_12_R1.PacketPlayOutSpawnEntityLiving;
 import net.minecraft.server.v1_12_R1.WorldServer;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -15,13 +17,15 @@ import java.util.*;
 
 @SuppressWarnings("WeakerAccess")
 public class Hologram {
-    private static SloverHologram instance = SloverHologram.getSloverHologram();
+    private final SloverHologram plugin = SloverHologram.getInstance();
 
     private final String name;
     private List<String> lines;
     private Location location;
-    private Chunk chunk;
-    public Map<UUID, List<EntityArmorStand>> entities = new HashMap<>();
+    private final Chunk chunk;
+    private final boolean custom;
+
+    private final Map<UUID, List<EntityArmorStand>> entities = new HashMap<>();
 
     /**
      * A method which creates a new hologram object
@@ -29,12 +33,27 @@ public class Hologram {
      * @param lines lines of the hologram
      * @param location location of the hologram
      */
-    public Hologram(final String name, final List<String> lines, final Location location) {
+    public Hologram(final String name, final List<String> lines, final Location location, final boolean custom) {
         this.name = name;
         this.lines = lines;
         this.location = location;
         this.chunk = location.getChunk();
-        instance.addHologramObject(this);
+        this.custom = custom;
+
+        if (!custom) {
+            plugin.hologramList.add(this);
+        } else {
+            plugin.getAPI().getHologramMap().put(name, this);
+        }
+    }
+
+    /**
+     * A method which checks either the hologram is API-created
+     * or manually created in-game using the command.
+     * @return true or false
+     */
+    public boolean isCustom() {
+        return custom;
     }
 
     /**
@@ -140,7 +159,7 @@ public class Hologram {
         }
 
         Location loc = this.location.clone();
-        double space = instance.getHologramClass().space();
+        double space = plugin.getHologramManager().space();
         if (!entities.containsKey(player.getUniqueId())) {
             entities.put(player.getUniqueId(), new ArrayList<>());
         }
@@ -161,7 +180,7 @@ public class Hologram {
      * and sends the packets to a certain player
      * @param player the player packet will be send to
      */
-    public void destroyHologram(final Player player) {
+    private void destroyHologram(final Player player) {
         if (!entities.containsKey(player.getUniqueId())) {
             return;
         }
@@ -179,6 +198,25 @@ public class Hologram {
             }
         }
         entities.remove(player.getUniqueId());
+    }
+
+    /**
+     * A method that completely destroys the hologram.
+     */
+    public void destroy() {
+        entities.forEach((key, value) -> {
+            Player player = Bukkit.getPlayer(key);
+            if (player != null && player.isOnline()) {
+                destroyHologram(player);
+            }
+        });
+
+        entities.clear();
+        if (isCustom()) {
+            plugin.getAPI().getHologramMap().remove(name);
+        } else {
+            plugin.hologramList.remove(this);
+        }
     }
 
     /**
@@ -206,7 +244,15 @@ public class Hologram {
      * @param string a normal string
      * @return colored string
      */
-    private String getColor(final String string) {
-        return string.replaceAll("&", "§");
+    protected String getColor(final String string) {
+        return ChatColor.translateAlternateColorCodes('&', string);
+    }
+
+    /**
+     * A method which returns all armorstands of the hologram
+     * @return the map with entities
+     */
+    public Map<UUID, List<EntityArmorStand>> getEntities() {
+        return entities;
     }
 }

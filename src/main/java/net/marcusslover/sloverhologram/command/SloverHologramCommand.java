@@ -1,8 +1,8 @@
 package net.marcusslover.sloverhologram.command;
 
 import net.marcusslover.sloverhologram.SloverHologram;
-import net.marcusslover.sloverhologram.holograms.Hologram;
-import net.marcusslover.sloverhologram.holograms.Holograms;
+import net.marcusslover.sloverhologram.hologram.Hologram;
+import net.marcusslover.sloverhologram.hologram.HologramManager;
 import net.marcusslover.sloverhologram.utils.Text;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -19,11 +19,11 @@ import java.util.List;
 
 public class SloverHologramCommand implements CommandExecutor {
     private final SloverHologram sloverHologram;
-    private final Holograms holograms;
+    private final HologramManager hologramManager;
 
     public SloverHologramCommand(SloverHologram sloverHologram) {
         this.sloverHologram = sloverHologram;
-        this.holograms = sloverHologram.getHologramClass();
+        this.hologramManager = sloverHologram.getHologramManager();
     }
 
     @Override
@@ -49,21 +49,21 @@ public class SloverHologramCommand implements CommandExecutor {
                         if (args[0].equalsIgnoreCase("create") || args[0].equalsIgnoreCase("c")) {
                             if (args.length >= 2 && args[1] != null) {
                                 if (args.length >= 3 && args[2] != null) {
-                                    if (!this.holograms.exists(args[1])) {
+                                    if (!this.hologramManager.exists(args[1])) {
                                         StringBuilder value = new StringBuilder();
                                         for (int i = 2; i < args.length; i++) {
                                             value.append(args[i]).append(" ");
                                         }
                                         String newValue = value.toString();
                                         newValue = newValue.substring(0, newValue.length() - 1);
-                                        this.holograms.create(args[1], player.getLocation(), newValue);
+                                        this.hologramManager.create(args[1], player.getLocation(), newValue);
                                         new Text(sloverHologram.prefix+" &7Hologram created!").send(player);
                                     } else {
                                         new Text(sloverHologram.prefix+" &7This name is already used by other hologram!").send(player);
                                     }
                                 } else {
-                                    if (!this.holograms.exists(args[1])) {
-                                        this.holograms.create(args[1], player.getLocation(), "/sh setline "+args[1]);
+                                    if (!this.hologramManager.exists(args[1])) {
+                                        this.hologramManager.create(args[1], player.getLocation(), "/sh setline "+args[1]);
                                         new Text(sloverHologram.prefix+" &7Hologram created!").send(player);
                                     } else {
                                         new Text(sloverHologram.prefix+" &7This name is already used by other hologram!").send(player);
@@ -76,9 +76,9 @@ public class SloverHologramCommand implements CommandExecutor {
                         if (args[0].equalsIgnoreCase("delete") || args[0].equalsIgnoreCase("remove")
                                 || args[0].equalsIgnoreCase("del")) {
                             if (args.length >= 2 && args[1] != null) {
-                                if (this.holograms.exists(args[1])) {
+                                if (this.hologramManager.exists(args[1])) {
                                     new Text(sloverHologram.prefix+" &7Hologram deleted!").send(player);
-                                    this.holograms.delete(args[1]);
+                                    this.hologramManager.delete(args[1]);
                                 } else {
                                     new Text(sloverHologram.prefix+" &7This hologram doesn't exist!").send(player);
                                 }
@@ -89,12 +89,12 @@ public class SloverHologramCommand implements CommandExecutor {
                         if (args[0].equalsIgnoreCase("addline") || args[0].equalsIgnoreCase("al")) {
                             if (args.length >= 2 && args[1] != null) {
                                 if (args.length >= 3 && args[2] != null) {
-                                    if (this.holograms.exists(args[1])) {
+                                    if (this.hologramManager.exists(args[1])) {
                                         StringBuilder value = new StringBuilder();
                                         for (int i = 2; i < args.length; i++) {
                                             value.append(args[i]).append(" ");
                                         }
-                                        this.holograms.addLine(args[1], value);
+                                        this.hologramManager.addLine(args[1], value);
                                         new Text(sloverHologram.prefix + " &7Line added!").send(player);
                                     } else {
                                         new Text(sloverHologram.prefix+" &7This hologram doesn't exist!").send(player);
@@ -112,8 +112,8 @@ public class SloverHologramCommand implements CommandExecutor {
                                     try {
                                         int line = Integer.parseInt(args[2]);
                                         if (line >= 1) {
-                                            if (this.holograms.size(args[1]) > line - 1) {
-                                                this.holograms.removeLine(args[1], line);
+                                            if (this.hologramManager.size(args[1]) > line - 1) {
+                                                this.hologramManager.removeLine(args[1], line);
                                                 new Text(sloverHologram.prefix + " &7Line removed!").send(player);
                                             } else {
                                                 new Text(sloverHologram.prefix + " &7This hologram doesn't have that many lines!").send(player);
@@ -135,7 +135,7 @@ public class SloverHologramCommand implements CommandExecutor {
                             if (args.length >= 2 && args[1] != null) {
                                 if (args.length >= 3 && args[2] != null) {
                                     if (args.length >= 4 && args[3] != null) {
-                                        if (this.holograms.exists(args[1])) {
+                                        if (this.hologramManager.exists(args[1])) {
                                             try {
                                                 StringBuilder value = new StringBuilder();
                                                 for (int i = 3; i < args.length; i++) {
@@ -143,8 +143,8 @@ public class SloverHologramCommand implements CommandExecutor {
                                                 }
                                                 int line = Integer.parseInt(args[2]);
                                                 if (line >= 1) {
-                                                    if (this.holograms.size(args[1]) >= line) {
-                                                        this.holograms.setLine(args[1], line, value);
+                                                    if (this.hologramManager.size(args[1]) >= line) {
+                                                        this.hologramManager.setLine(args[1], line, value);
                                                         new Text(sloverHologram.prefix + " &7Line updated!").send(player);
                                                     } else {
                                                         new Text(sloverHologram.prefix + " &7This hologram doesn't have that many lines!").send(player);
@@ -170,9 +170,9 @@ public class SloverHologramCommand implements CommandExecutor {
                         }
                         if (args[0].equalsIgnoreCase("tphere") || args[0].equalsIgnoreCase("move")) {
                             if (args.length >= 2 && args[1] != null) {
-                                if (this.holograms.exists(args[1])) {
+                                if (this.hologramManager.exists(args[1])) {
                                     new Text(sloverHologram.prefix+" &7Hologram teleported!").send(player);
-                                    this.holograms.teleport(args[1], player.getLocation());
+                                    this.hologramManager.teleport(args[1], player.getLocation());
                                 } else {
                                     new Text(sloverHologram.prefix+" &7This hologram doesn't exist!").send(player);
                                 }
@@ -182,9 +182,9 @@ public class SloverHologramCommand implements CommandExecutor {
                         }
                         if (args[0].equalsIgnoreCase("tp")) {
                             if (args.length >= 2 && args[1] != null) {
-                                if (this.holograms.exists(args[1])) {
+                                if (this.hologramManager.exists(args[1])) {
                                     new Text(sloverHologram.prefix+" &7You were teleported!").send(player);
-                                    this.holograms.teleportPlayer(args[1], player);
+                                    this.hologramManager.teleportPlayer(args[1], player);
                                 } else {
                                     new Text(sloverHologram.prefix+" &7This hologram doesn't exist!").send(player);
                                 }
@@ -286,9 +286,9 @@ public class SloverHologramCommand implements CommandExecutor {
                         if (args[0].equalsIgnoreCase("delete") || args[0].equalsIgnoreCase("remove")
                                 || args[0].equalsIgnoreCase("del")) {
                             if (args.length >= 2 && args[1] != null) {
-                                if (this.holograms.exists(args[1])) {
+                                if (this.hologramManager.exists(args[1])) {
                                     new Text(sloverHologram.prefix+" &7Hologram deleted!").send(sender);
-                                    this.holograms.delete(args[1]);
+                                    this.hologramManager.delete(args[1]);
                                 } else {
                                     new Text(sloverHologram.prefix+" &7This hologram doesn't exist!").send(sender);
                                 }
@@ -299,12 +299,12 @@ public class SloverHologramCommand implements CommandExecutor {
                         if (args[0].equalsIgnoreCase("addline") || args[0].equalsIgnoreCase("al")) {
                             if (args.length >= 2 && args[1] != null) {
                                 if (args.length >= 3 && args[2] != null) {
-                                    if (this.holograms.exists(args[1])) {
+                                    if (this.hologramManager.exists(args[1])) {
                                         StringBuilder value = new StringBuilder();
                                         for (int i = 2; i < args.length; i++) {
                                             value.append(args[i]).append(" ");
                                         }
-                                        this.holograms.addLine(args[1], value);
+                                        this.hologramManager.addLine(args[1], value);
                                         new Text(sloverHologram.prefix + " &7Line added!").send(sender);
                                     } else {
                                         new Text(sloverHologram.prefix+" &7This hologram doesn't exist!").send(sender);
@@ -322,8 +322,8 @@ public class SloverHologramCommand implements CommandExecutor {
                                     try {
                                         int line = Integer.parseInt(args[2]);
                                         if (line >= 1) {
-                                            if (this.holograms.size(args[1]) > line - 1) {
-                                                this.holograms.removeLine(args[1], line);
+                                            if (this.hologramManager.size(args[1]) > line - 1) {
+                                                this.hologramManager.removeLine(args[1], line);
                                                 new Text(sloverHologram.prefix + " &7Line removed!").send(sender);
                                             } else {
                                                 new Text(sloverHologram.prefix + " &7This hologram doesn't have that many lines!").send(sender);
@@ -345,7 +345,7 @@ public class SloverHologramCommand implements CommandExecutor {
                             if (args.length >= 2 && args[1] != null) {
                                 if (args.length >= 3 && args[2] != null) {
                                     if (args.length >= 4 && args[3] != null) {
-                                        if (this.holograms.exists(args[1])) {
+                                        if (this.hologramManager.exists(args[1])) {
                                             try {
                                                 StringBuilder value = new StringBuilder();
                                                 for (int i = 3; i < args.length; i++) {
@@ -353,8 +353,8 @@ public class SloverHologramCommand implements CommandExecutor {
                                                 }
                                                 int line = Integer.parseInt(args[2]);
                                                 if (line >= 1) {
-                                                    if (this.holograms.size(args[1]) >= line) {
-                                                        this.holograms.setLine(args[1], line, value);
+                                                    if (this.hologramManager.size(args[1]) >= line) {
+                                                        this.hologramManager.setLine(args[1], line, value);
                                                         //new Text(sloverHologram.prefix + " &7Line updated!").send(sender);
                                                     } else {
                                                         new Text(sloverHologram.prefix + " &7This hologram doesn't have that many lines!").send(sender);
