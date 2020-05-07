@@ -27,7 +27,7 @@ public class Holograms implements HologramEditor {
         lines.add(value);
         Hologram hologram = new Hologram(name, lines, location);
         List<String> list = sloverHologram.getHologramNames();
-        if (lines.contains(name)) {
+        if (list.contains(name)) {
             return;
         }
 
