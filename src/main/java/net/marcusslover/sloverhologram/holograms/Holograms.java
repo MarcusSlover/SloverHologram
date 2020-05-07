@@ -27,6 +27,10 @@ public class Holograms implements HologramEditor {
         lines.add(value);
         Hologram hologram = new Hologram(name, lines, location);
         List<String> list = sloverHologram.getHologramNames();
+        if (lines.contains(name)) {
+            return;
+        }
+
         list.add(name);
         sloverHologram.sloverHologramData.set("hologram-list", list);
         sloverHologram.sloverHologramData.set("hologram-data."+name+".lines", lines);
@@ -44,6 +48,10 @@ public class Holograms implements HologramEditor {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 holo = hologram;
                 List<String> list = sloverHologram.getHologramNames();
+                if (!list.contains(name)) {
+                    return;
+                }
+
                 list.remove(name);
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     hologram.remove(player);
@@ -53,6 +61,7 @@ public class Holograms implements HologramEditor {
                 sloverHologram.sloverHologramData.config.set("hologram-data."+name+".lines", null);
                 sloverHologram.sloverHologramData.config.set("hologram-data." + name + ".location", null);
                 sloverHologram.sloverHologramData.save();
+                break;
             }
         }
         if (holo != null) {

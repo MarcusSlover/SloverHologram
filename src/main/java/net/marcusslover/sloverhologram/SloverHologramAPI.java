@@ -1,6 +1,7 @@
 package net.marcusslover.sloverhologram;
 
 import net.marcusslover.sloverhologram.holograms.Hologram;
+import net.marcusslover.sloverhologram.holograms.HologramEditor;
 import net.marcusslover.sloverhologram.holograms.Holograms;
 import net.minecraft.server.v1_12_R1.EntityArmorStand;
 import net.minecraft.server.v1_12_R1.PacketPlayOutEntityDestroy;
@@ -13,7 +14,7 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 
-public class SloverHologramAPI {
+public class SloverHologramAPI implements HologramEditor {
     private final Holograms holograms;
     private final SloverHologram instance;
     @SuppressWarnings("WeakerAccess")
@@ -225,4 +226,53 @@ public class SloverHologramAPI {
         return string.replaceAll("&", "§");
     }
 
+    @Override
+    public boolean exists(String name) {
+        return instance.getHologramClass().exists(name);
+    }
+
+    @Override
+    public void create(String name, Location location, String value) {
+        instance.getHologramClass().create(name, location, value);
+    }
+
+    @Override
+    public void delete(String name) {
+        instance.getHologramClass().delete(name);
+    }
+
+    @Override
+    public void removeLine(String name, int value) {
+        instance.getHologramClass().removeLine(name, value);
+    }
+
+    @Override
+    public void addLine(String name, StringBuilder value) {
+        instance.getHologramClass().addLine(name, value);
+    }
+
+    @Override
+    public void setLine(String name, int i, StringBuilder value) {
+        instance.getHologramClass().setLine(name, i, value);
+    }
+
+    @Override
+    public void teleport(String name, Location location) {
+        instance.getHologramClass().teleport(name, location);
+    }
+
+    @Override
+    public void teleportPlayer(String name, Player player) {
+        instance.getHologramClass().teleportPlayer(name, player);
+    }
+
+    @Override
+    public int size(String name) {
+        return instance.getHologramClass().size(name);
+    }
+
+    @Override
+    public double space() {
+        return instance.getHologramClass().space();
+    }
 }
