@@ -8,6 +8,8 @@
   <component name="ChangeListManager">
     <list default="true" id="420f1667-6a22-41aa-8682-5c4c989e9b63" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/SloverHologram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/SloverHologram.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/holograms/Holograms.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/holograms/Holograms.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,6 +154,8 @@
       <workItem from="1586548280607" duration="693000" />
       <workItem from="1588854781466" duration="566000" />
       <workItem from="1588873111748" duration="310000" />
+      <workItem from="1588874292158" duration="146000" />
+      <workItem from="1588874610761" duration="299000" />
     </task>
     <task id="LOCAL-00001" summary="Test">
       <created>1544559208073</created>
@@ -279,7 +283,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588873302860</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="* Fixed bugs">
+      <created>1588874421869</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1588874421869</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TodoView">
@@ -320,11 +331,11 @@
     <MESSAGE value="+ Added reflection for future&#10;* Bug fixes" />
     <MESSAGE value="* Improved and fixed very old code" />
     <MESSAGE value="* Fixed error while loading the plugin" />
-    <MESSAGE value="* Fixed bugs" />
     <MESSAGE value="* Fixed bug" />
     <MESSAGE value="+ New API features" />
     <MESSAGE value="* Fixed a critical bug in the API" />
-    <option name="LAST_COMMIT_MESSAGE" value="* Fixed a critical bug in the API" />
+    <MESSAGE value="* Fixed bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="* Fixed bugs" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WindowStateProjectService">
@@ -332,10 +343,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="718" y="155" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1588855042920" />
-    <state x="571" y="12" key="CommitChangelistDialog2" timestamp="1588873300646">
+    <state x="571" y="12" key="CommitChangelistDialog2" timestamp="1588874419683">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="571" y="12" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1588873300646" />
+    <state x="571" y="12" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1588874419683" />
     <state x="289" y="129" key="DiffContextDialog" timestamp="1588855207733">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -348,10 +359,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="440" y="0" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1585617048214" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1588873304040">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1588874423285">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588873304040" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588874423285" />
     <state x="624" y="223" key="extract.method.dialog" timestamp="1588855144403">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

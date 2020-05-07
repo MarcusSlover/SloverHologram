@@ -49,9 +49,6 @@ public class Holograms implements HologramEditor {
             if (hologram.getName().equalsIgnoreCase(name)) {
                 holo = hologram;
                 List<String> list = sloverHologram.getHologramNames();
-                if (!list.contains(name)) {
-                    return;
-                }
 
                 list.remove(name);
                 for (Player player : Bukkit.getOnlinePlayers()) {

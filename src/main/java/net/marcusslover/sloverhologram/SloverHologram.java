@@ -57,6 +57,10 @@ public final class SloverHologram extends JavaPlugin implements Listener {
         hologramClass =  new Holograms();
         hologramAPI = new SloverHologramAPI();
 
+        if (!this.getDataFolder().exists()) {
+            this.getDataFolder().mkdirs();
+        }
+
         this.loadFiles(s -> {
             //show the holograms
             new BukkitRunnable() {
@@ -85,9 +89,6 @@ public final class SloverHologram extends JavaPlugin implements Listener {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private void loadFiles(Consumer<String> consumer) {
         executorService.execute(() -> {
-            if (!this.getDataFolder().exists()) {
-                this.getDataFolder().mkdirs();
-            }
             this.sloverHologramData = new SloverHologramData(this, "data.yml");
             this.sloverConfig = new SloverConfig(this, "config.yml");
             consumer.accept("");
