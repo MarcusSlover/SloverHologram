@@ -24,12 +24,13 @@ public class Holograms implements HologramEditor {
     @Override
     public void create(final String name, final Location location, final String value) {
         List<String> lines = new ArrayList<>();
-        lines.add(value);
-        Hologram hologram = new Hologram(name, lines, location);
         List<String> list = sloverHologram.getHologramNames();
         if (list.contains(name)) {
             return;
         }
+
+        lines.add(value);
+        Hologram hologram = new Hologram(name, lines, location);
 
         list.add(name);
         sloverHologram.sloverHologramData.set("hologram-list", list);

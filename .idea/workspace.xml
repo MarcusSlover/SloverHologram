@@ -48,7 +48,6 @@
       <MavenImportingSettings>
         <option name="downloadDocsAutomatically" value="true" />
         <option name="downloadSourcesAutomatically" value="true" />
-        <option name="importAutomatically" value="true" />
       </MavenImportingSettings>
     </option>
   </component>
@@ -69,7 +68,6 @@
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
@@ -149,6 +147,11 @@
       <workItem from="1585160809675" duration="1864000" />
       <workItem from="1585616949224" duration="311000" />
       <workItem from="1585617581570" duration="285000" />
+      <workItem from="1585618160716" duration="196000" />
+      <workItem from="1585618642284" duration="310000" />
+      <workItem from="1586548280607" duration="693000" />
+      <workItem from="1588854781466" duration="566000" />
+      <workItem from="1588873111748" duration="310000" />
     </task>
     <task id="LOCAL-00001" summary="Test">
       <created>1544559208073</created>
@@ -248,7 +251,35 @@
       <option name="project" value="LOCAL" />
       <updated>1585617849221</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="* Fixed bugs">
+      <created>1585618341749</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1585618341749</updated>
+    </task>
+    <task id="LOCAL-00016" summary="* Fixed bug">
+      <created>1586548315800</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1586548315800</updated>
+    </task>
+    <task id="LOCAL-00017" summary="+ New API features">
+      <created>1588855224567</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1588855224567</updated>
+    </task>
+    <task id="LOCAL-00018" summary="* Fixed a critical bug in the API">
+      <created>1588873302860</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1588873302860</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TodoView">
@@ -261,20 +292,19 @@
     </todo-panel>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
@@ -290,18 +320,26 @@
     <MESSAGE value="+ Added reflection for future&#10;* Bug fixes" />
     <MESSAGE value="* Improved and fixed very old code" />
     <MESSAGE value="* Fixed error while loading the plugin" />
-    <option name="LAST_COMMIT_MESSAGE" value="* Fixed error while loading the plugin" />
+    <MESSAGE value="* Fixed bugs" />
+    <MESSAGE value="* Fixed bug" />
+    <MESSAGE value="+ New API features" />
+    <MESSAGE value="* Fixed a critical bug in the API" />
+    <option name="LAST_COMMIT_MESSAGE" value="* Fixed a critical bug in the API" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="571" y="86" key="CommitChangelistDialog2" timestamp="1585617847107">
+    <state x="718" y="155" key="#com.intellij.ide.util.MemberChooser" timestamp="1588855042920">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="571" y="86" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1585617847107" />
-    <state x="289" y="129" key="DiffContextDialog" timestamp="1585617832888">
+    <state x="718" y="155" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1588855042920" />
+    <state x="571" y="12" key="CommitChangelistDialog2" timestamp="1588873300646">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="289" y="129" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585617832888" />
+    <state x="571" y="12" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1588873300646" />
+    <state x="289" y="129" key="DiffContextDialog" timestamp="1588855207733">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="289" y="129" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1588855207733" />
     <state x="818" y="199" key="FileChooserDialogImpl" timestamp="1585617046256">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -310,9 +348,13 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="440" y="0" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1585617048214" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1585617851851">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1588873304040">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1585617851851" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588873304040" />
+    <state x="624" y="223" key="extract.method.dialog" timestamp="1588855144403">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="624" y="223" key="extract.method.dialog/0.0.1920.1040@0.0.1920.1040" timestamp="1588855144403" />
   </component>
 </project>
