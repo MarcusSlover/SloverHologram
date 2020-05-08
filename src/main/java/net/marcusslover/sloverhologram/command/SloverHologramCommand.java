@@ -18,13 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SloverHologramCommand implements CommandExecutor {
-    private final SloverHologram sloverHologram;
-    private final HologramManager hologramManager;
-
-    public SloverHologramCommand(SloverHologram sloverHologram) {
-        this.sloverHologram = sloverHologram;
-        this.hologramManager = sloverHologram.getHologramManager();
-    }
+    private final SloverHologram plugin = SloverHologram.getInstance();
+    private final HologramManager hologramManager = plugin.getHologramManager();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -33,7 +28,7 @@ public class SloverHologramCommand implements CommandExecutor {
                 Player player = (Player) sender;
                 if (player.hasPermission("sloverhologram.use")) {
                     if (args.length == 0) {
-                        new Text(sloverHologram.prefix+" &7Command arguments").send(player);
+                        new Text(plugin.prefix+" &7Command arguments").send(player);
                         new Text("&f/sh create (name) (text) &7creates hologram").send(player);
                         new Text("&f/sh delete (name) &7deletes hologram").send(player);
                         new Text("&f/sh addline (name) (text) &7adds a line").send(player);
@@ -44,14 +39,14 @@ public class SloverHologramCommand implements CommandExecutor {
                         new Text("&f/sh near (int) &7displays hologram in certain radius").send(player);
                         new Text("&f/sh setdistance (double) &7sets the distance between holograms").send(player);
                         new Text("&f/sh list &7displays list of holograms").send(player);
-                        new Text("&f/sh debug &7displays some plugin informations").send(player);
+                        new Text("&f/sh debug &7displays some plugin information").send(player);
                         new Text("&ePlugin created by MarcusSlover").send(player);
                     } else {
                         if (args[0].equalsIgnoreCase("debug")) {
-                            new Text(sloverHologram.prefix+" &7Debug").send(player);
-                            new Text("&fManual holograms: &a"+sloverHologram.hologramList.size()).send(player);
+                            new Text(plugin.prefix+" &7Debug").send(player);
+                            new Text("&fManual holograms: &a"+ plugin.hologramList.size()).send(player);
                             new Text("&fAPI holograms: &b"
-                                    +sloverHologram.getAPI().getHologramMap().size()).send(player);
+                                    + plugin.getAPI().getHologramMap().size()).send(player);
 
                         }
                         if (args[0].equalsIgnoreCase("create") || args[0].equalsIgnoreCase("c")) {
@@ -65,33 +60,33 @@ public class SloverHologramCommand implements CommandExecutor {
                                         String newValue = value.toString();
                                         newValue = newValue.substring(0, newValue.length() - 1);
                                         this.hologramManager.create(args[1], player.getLocation(), newValue);
-                                        new Text(sloverHologram.prefix+" &7Hologram created!").send(player);
+                                        new Text(plugin.prefix+" &7Hologram created!").send(player);
                                     } else {
-                                        new Text(sloverHologram.prefix+" &7This name is already used by other hologram!").send(player);
+                                        new Text(plugin.prefix+" &7This name is already used by other hologram!").send(player);
                                     }
                                 } else {
                                     if (!this.hologramManager.exists(args[1])) {
                                         this.hologramManager.create(args[1], player.getLocation(), "/sh setline "+args[1]);
-                                        new Text(sloverHologram.prefix+" &7Hologram created!").send(player);
+                                        new Text(plugin.prefix+" &7Hologram created!").send(player);
                                     } else {
-                                        new Text(sloverHologram.prefix+" &7This name is already used by other hologram!").send(player);
+                                        new Text(plugin.prefix+" &7This name is already used by other hologram!").send(player);
                                     }
                                 }
                             } else {
-                                new Text(sloverHologram.prefix+" &7Usage: &f/sh create (name) (text)&7!").send(player);
+                                new Text(plugin.prefix+" &7Usage: &f/sh create (name) (text)&7!").send(player);
                             }
                         }
                         if (args[0].equalsIgnoreCase("delete") || args[0].equalsIgnoreCase("remove")
                                 || args[0].equalsIgnoreCase("del")) {
                             if (args.length >= 2 && args[1] != null) {
                                 if (this.hologramManager.exists(args[1])) {
-                                    new Text(sloverHologram.prefix+" &7Hologram deleted!").send(player);
+                                    new Text(plugin.prefix+" &7Hologram deleted!").send(player);
                                     this.hologramManager.delete(args[1]);
                                 } else {
-                                    new Text(sloverHologram.prefix+" &7This hologram doesn't exist!").send(player);
+                                    new Text(plugin.prefix+" &7This hologram doesn't exist!").send(player);
                                 }
                             } else {
-                                new Text(sloverHologram.prefix+" &7Usage: &f/sh delete (name)&7!").send(player);
+                                new Text(plugin.prefix+" &7Usage: &f/sh delete (name)&7!").send(player);
                             }
                         }
                         if (args[0].equalsIgnoreCase("addline") || args[0].equalsIgnoreCase("al")) {
@@ -103,15 +98,15 @@ public class SloverHologramCommand implements CommandExecutor {
                                             value.append(args[i]).append(" ");
                                         }
                                         this.hologramManager.addLine(args[1], value);
-                                        new Text(sloverHologram.prefix + " &7Line added!").send(player);
+                                        new Text(plugin.prefix + " &7Line added!").send(player);
                                     } else {
-                                        new Text(sloverHologram.prefix+" &7This hologram doesn't exist!").send(player);
+                                        new Text(plugin.prefix+" &7This hologram doesn't exist!").send(player);
                                     }
                                 } else {
-                                    new Text(sloverHologram.prefix+" &7Usage: &f/sh addline (name) (text)&7!").send(player);
+                                    new Text(plugin.prefix+" &7Usage: &f/sh addline (name) (text)&7!").send(player);
                                 }
                             } else {
-                                new Text(sloverHologram.prefix+" &7Usage: &f/sh addline (name) (text)&7!").send(player);
+                                new Text(plugin.prefix+" &7Usage: &f/sh addline (name) (text)&7!").send(player);
                             }
                         }
                         if (args[0].equalsIgnoreCase("removeline") || args[0].equalsIgnoreCase("rl")) {
@@ -122,21 +117,21 @@ public class SloverHologramCommand implements CommandExecutor {
                                         if (line >= 1) {
                                             if (this.hologramManager.size(args[1]) > line - 1) {
                                                 this.hologramManager.removeLine(args[1], line);
-                                                new Text(sloverHologram.prefix + " &7Line removed!").send(player);
+                                                new Text(plugin.prefix + " &7Line removed!").send(player);
                                             } else {
-                                                new Text(sloverHologram.prefix + " &7This hologram doesn't have that many lines!").send(player);
+                                                new Text(plugin.prefix + " &7This hologram doesn't have that many lines!").send(player);
                                             }
                                         } else {
-                                            new Text(sloverHologram.prefix + " &7Use a number bigger than zero!").send(player);
+                                            new Text(plugin.prefix + " &7Use a number bigger than zero!").send(player);
                                         }
                                     } catch (NumberFormatException e) {
-                                        new Text(sloverHologram.prefix + " &7This is not a number!").send(player);
+                                        new Text(plugin.prefix + " &7This is not a number!").send(player);
                                     }
                                 } else {
-                                    new Text(sloverHologram.prefix+" &7Usage: &f/sh removeline (name) (number)&7!").send(player);
+                                    new Text(plugin.prefix+" &7Usage: &f/sh removeline (name) (number)&7!").send(player);
                                 }
                             } else {
-                                new Text(sloverHologram.prefix+" &7Usage: &f/sh removeline (name) (number)&7!").send(player);
+                                new Text(plugin.prefix+" &7Usage: &f/sh removeline (name) (number)&7!").send(player);
                             }
                         }
                         if (args[0].equalsIgnoreCase("setline") || args[0].equalsIgnoreCase("sl")) {
@@ -153,51 +148,51 @@ public class SloverHologramCommand implements CommandExecutor {
                                                 if (line >= 1) {
                                                     if (this.hologramManager.size(args[1]) >= line) {
                                                         this.hologramManager.setLine(args[1], line, value);
-                                                        new Text(sloverHologram.prefix + " &7Line updated!").send(player);
+                                                        new Text(plugin.prefix + " &7Line updated!").send(player);
                                                     } else {
-                                                        new Text(sloverHologram.prefix + " &7This hologram doesn't have that many lines!").send(player);
+                                                        new Text(plugin.prefix + " &7This hologram doesn't have that many lines!").send(player);
                                                     }
                                                 } else {
-                                                    new Text(sloverHologram.prefix + " &7Use a number bigger than zero!").send(player);
+                                                    new Text(plugin.prefix + " &7Use a number bigger than zero!").send(player);
                                                 }
                                             } catch (NumberFormatException e) {
-                                                new Text(sloverHologram.prefix + " &7This is not a number!").send(player);
+                                                new Text(plugin.prefix + " &7This is not a number!").send(player);
                                             }
                                         } else {
-                                            new Text(sloverHologram.prefix + " &7This hologram doesn't exist!").send(player);
+                                            new Text(plugin.prefix + " &7This hologram doesn't exist!").send(player);
                                         }
                                     } else {
-                                        new Text(sloverHologram.prefix+" &7Usage: &f/sh setline (name) (number) (text)&7!").send(player);
+                                        new Text(plugin.prefix+" &7Usage: &f/sh setline (name) (number) (text)&7!").send(player);
                                     }
                                 } else {
-                                    new Text(sloverHologram.prefix+" &7Usage: &f/sh setline (name) (number) (text)&7!").send(player);
+                                    new Text(plugin.prefix+" &7Usage: &f/sh setline (name) (number) (text)&7!").send(player);
                                 }
                             } else {
-                                new Text(sloverHologram.prefix+" &7Usage: &f/sh setline (name) (number) (text)&7!").send(player);
+                                new Text(plugin.prefix+" &7Usage: &f/sh setline (name) (number) (text)&7!").send(player);
                             }
                         }
                         if (args[0].equalsIgnoreCase("tphere") || args[0].equalsIgnoreCase("move")) {
                             if (args.length >= 2 && args[1] != null) {
                                 if (this.hologramManager.exists(args[1])) {
-                                    new Text(sloverHologram.prefix+" &7Hologram teleported!").send(player);
+                                    new Text(plugin.prefix+" &7Hologram teleported!").send(player);
                                     this.hologramManager.teleport(args[1], player.getLocation());
                                 } else {
-                                    new Text(sloverHologram.prefix+" &7This hologram doesn't exist!").send(player);
+                                    new Text(plugin.prefix+" &7This hologram doesn't exist!").send(player);
                                 }
                             } else {
-                                new Text(sloverHologram.prefix+" &7Usage: &f/sh move (name)&7!").send(player);
+                                new Text(plugin.prefix+" &7Usage: &f/sh move (name)&7!").send(player);
                             }
                         }
                         if (args[0].equalsIgnoreCase("tp")) {
                             if (args.length >= 2 && args[1] != null) {
                                 if (this.hologramManager.exists(args[1])) {
-                                    new Text(sloverHologram.prefix+" &7You were teleported!").send(player);
+                                    new Text(plugin.prefix+" &7You were teleported!").send(player);
                                     this.hologramManager.teleportPlayer(args[1], player);
                                 } else {
-                                    new Text(sloverHologram.prefix+" &7This hologram doesn't exist!").send(player);
+                                    new Text(plugin.prefix+" &7This hologram doesn't exist!").send(player);
                                 }
                             } else {
-                                new Text(sloverHologram.prefix+" &7Usage: &f/sh tp (name)&7!").send(player);
+                                new Text(plugin.prefix+" &7Usage: &f/sh tp (name)&7!").send(player);
                             }
                         }
                         if (args[0].equalsIgnoreCase("near")) {
@@ -205,7 +200,7 @@ public class SloverHologramCommand implements CommandExecutor {
                                 try {
                                     int radius = Integer.parseInt(args[1]);
                                     List<Hologram> found = new ArrayList<>();
-                                    for (Hologram hologram : sloverHologram.hologramList) {
+                                    for (Hologram hologram : plugin.hologramList) {
                                         if (hologram.getLocation().getWorld().equals(player.getWorld())) {
                                             if (hologram.getLocation().distance(player.getLocation()) <= radius) {
                                                 found.add(hologram);
@@ -213,9 +208,9 @@ public class SloverHologramCommand implements CommandExecutor {
                                         }
                                     }
                                     if (found.isEmpty()) {
-                                        new Text(sloverHologram.prefix + " &7Could not find any holograms!").send(player);
+                                        new Text(plugin.prefix + " &7Could not find any holograms!").send(player);
                                     } else {
-                                        new Text(sloverHologram.prefix + " &7Found &a"+toFancyCost(found.size())
+                                        new Text(plugin.prefix + " &7Found &a"+toFancyCost(found.size())
                                                 +"&7 hologram"+(found.size() > 1 ? "s" : "")+"!").send(player);
                                         for (Hologram hologram : found) {
                                             Location loc = hologram.getLocation();
@@ -230,10 +225,10 @@ public class SloverHologramCommand implements CommandExecutor {
                                         }
                                     }
                                 } catch (NumberFormatException e) {
-                                    new Text(sloverHologram.prefix + " &7This is not a number!").send(player);
+                                    new Text(plugin.prefix + " &7This is not a number!").send(player);
                                 }
                             } else {
-                                new Text(sloverHologram.prefix+" &7Usage: &f/sh near (int)&7!").send(player);
+                                new Text(plugin.prefix+" &7Usage: &f/sh near (int)&7!").send(player);
                             }
                         }
                         if (args[0].equalsIgnoreCase("setdistance")) {
@@ -241,25 +236,25 @@ public class SloverHologramCommand implements CommandExecutor {
                                 try {
                                     double distance = Double.parseDouble(args[1]);
                                     if (distance > 0) {
-                                        sloverHologram.sloverConfig.set("hologram-space", distance);
-                                        new Text(sloverHologram.prefix + " &7Distance changed!").send(player);
+                                        plugin.sloverConfig.set("hologram-space", distance);
+                                        new Text(plugin.prefix + " &7Distance changed!").send(player);
                                     } else {
-                                        new Text(sloverHologram.prefix + " &7Use a number bigger than zero!").send(player);
+                                        new Text(plugin.prefix + " &7Use a number bigger than zero!").send(player);
                                     }
                                 } catch (NumberFormatException e) {
-                                    new Text(sloverHologram.prefix + " &7This is not a double!").send(player);
+                                    new Text(plugin.prefix + " &7This is not a double!").send(player);
                                 }
                             } else {
-                                new Text(sloverHologram.prefix+" &7Usage: &f/sh setdistance (double)&7!").send(player);
+                                new Text(plugin.prefix+" &7Usage: &f/sh setdistance (double)&7!").send(player);
                             }
                         }
                         if (args[0].equalsIgnoreCase("list")) {
-                            if (sloverHologram.hologramList.isEmpty()) {
-                                new Text(sloverHologram.prefix + " &7This list is empty!").send(player);
+                            if (plugin.hologramList.isEmpty()) {
+                                new Text(plugin.prefix + " &7This list is empty!").send(player);
                             } else {
-                                new Text(sloverHologram.prefix + " &7There is &a"+toFancyCost(sloverHologram.hologramList.size())
-                                        +" &7hologram"+(sloverHologram.hologramList.size() > 1 ? "s" : "")+"!").send(player);
-                                for (Hologram hologram : sloverHologram.hologramList) {
+                                new Text(plugin.prefix + " &7There is &a"+toFancyCost(plugin.hologramList.size())
+                                        +" &7hologram"+(plugin.hologramList.size() > 1 ? "s" : "")+"!").send(player);
+                                for (Hologram hologram : plugin.hologramList) {
                                     Location loc = hologram.getLocation();
                                     DecimalFormat f = new DecimalFormat("##.000");
                                     String x = f.format(loc.getX());
@@ -274,12 +269,12 @@ public class SloverHologramCommand implements CommandExecutor {
                         }
                     }
                 } else {
-                    new Text(sloverHologram.prefix+" &7No permission!").send(player);
+                    new Text(plugin.prefix+" &7No permission!").send(player);
                 }
             } else {
                 if (sender instanceof ConsoleCommandSender) {
                     if (args.length == 0) {
-                        new Text(sloverHologram.prefix+" &7Command arguments").send(sender);
+                        new Text(plugin.prefix+" &7Command arguments").send(sender);
                         new Text("&f/sh create (name) (text) &7creates hologram").send(sender);
                         new Text("&f/sh delete (name) &7deletes hologram").send(sender);
                         new Text("&f/sh addline (name) (text) &7adds a line").send(sender);
@@ -295,13 +290,13 @@ public class SloverHologramCommand implements CommandExecutor {
                                 || args[0].equalsIgnoreCase("del")) {
                             if (args.length >= 2 && args[1] != null) {
                                 if (this.hologramManager.exists(args[1])) {
-                                    new Text(sloverHologram.prefix+" &7Hologram deleted!").send(sender);
+                                    new Text(plugin.prefix+" &7Hologram deleted!").send(sender);
                                     this.hologramManager.delete(args[1]);
                                 } else {
-                                    new Text(sloverHologram.prefix+" &7This hologram doesn't exist!").send(sender);
+                                    new Text(plugin.prefix+" &7This hologram doesn't exist!").send(sender);
                                 }
                             } else {
-                                new Text(sloverHologram.prefix+" &7Usage: &f/sh delete (name)&7!").send(sender);
+                                new Text(plugin.prefix+" &7Usage: &f/sh delete (name)&7!").send(sender);
                             }
                         }
                         if (args[0].equalsIgnoreCase("addline") || args[0].equalsIgnoreCase("al")) {
@@ -313,15 +308,15 @@ public class SloverHologramCommand implements CommandExecutor {
                                             value.append(args[i]).append(" ");
                                         }
                                         this.hologramManager.addLine(args[1], value);
-                                        new Text(sloverHologram.prefix + " &7Line added!").send(sender);
+                                        new Text(plugin.prefix + " &7Line added!").send(sender);
                                     } else {
-                                        new Text(sloverHologram.prefix+" &7This hologram doesn't exist!").send(sender);
+                                        new Text(plugin.prefix+" &7This hologram doesn't exist!").send(sender);
                                     }
                                 } else {
-                                    new Text(sloverHologram.prefix+" &7Usage: &f/sh addline (name) (text)&7!").send(sender);
+                                    new Text(plugin.prefix+" &7Usage: &f/sh addline (name) (text)&7!").send(sender);
                                 }
                             } else {
-                                new Text(sloverHologram.prefix+" &7Usage: &f/sh addline (name) (text)&7!").send(sender);
+                                new Text(plugin.prefix+" &7Usage: &f/sh addline (name) (text)&7!").send(sender);
                             }
                         }
                         if (args[0].equalsIgnoreCase("removeline") || args[0].equalsIgnoreCase("rl")) {
@@ -332,21 +327,21 @@ public class SloverHologramCommand implements CommandExecutor {
                                         if (line >= 1) {
                                             if (this.hologramManager.size(args[1]) > line - 1) {
                                                 this.hologramManager.removeLine(args[1], line);
-                                                new Text(sloverHologram.prefix + " &7Line removed!").send(sender);
+                                                new Text(plugin.prefix + " &7Line removed!").send(sender);
                                             } else {
-                                                new Text(sloverHologram.prefix + " &7This hologram doesn't have that many lines!").send(sender);
+                                                new Text(plugin.prefix + " &7This hologram doesn't have that many lines!").send(sender);
                                             }
                                         } else {
-                                            new Text(sloverHologram.prefix + " &7Use a number bigger than zero!").send(sender);
+                                            new Text(plugin.prefix + " &7Use a number bigger than zero!").send(sender);
                                         }
                                     } catch (NumberFormatException e) {
-                                        new Text(sloverHologram.prefix + " &7This is not a number!").send(sender);
+                                        new Text(plugin.prefix + " &7This is not a number!").send(sender);
                                     }
                                 } else {
-                                    new Text(sloverHologram.prefix+" &7Usage: &f/sh removeline (name) (number)&7!").send(sender);
+                                    new Text(plugin.prefix+" &7Usage: &f/sh removeline (name) (number)&7!").send(sender);
                                 }
                             } else {
-                                new Text(sloverHologram.prefix+" &7Usage: &f/sh removeline (name) (number)&7!").send(sender);
+                                new Text(plugin.prefix+" &7Usage: &f/sh removeline (name) (number)&7!").send(sender);
                             }
                         }
                         if (args[0].equalsIgnoreCase("setline") || args[0].equalsIgnoreCase("sl")) {
@@ -365,25 +360,25 @@ public class SloverHologramCommand implements CommandExecutor {
                                                         this.hologramManager.setLine(args[1], line, value);
                                                         //new Text(sloverHologram.prefix + " &7Line updated!").send(sender);
                                                     } else {
-                                                        new Text(sloverHologram.prefix + " &7This hologram doesn't have that many lines!").send(sender);
+                                                        new Text(plugin.prefix + " &7This hologram doesn't have that many lines!").send(sender);
                                                     }
                                                 } else {
-                                                    new Text(sloverHologram.prefix + " &7Use a number bigger than zero!").send(sender);
+                                                    new Text(plugin.prefix + " &7Use a number bigger than zero!").send(sender);
                                                 }
                                             } catch (NumberFormatException e) {
-                                                new Text(sloverHologram.prefix + " &7This is not a number!").send(sender);
+                                                new Text(plugin.prefix + " &7This is not a number!").send(sender);
                                             }
                                         } else {
-                                            new Text(sloverHologram.prefix + " &7This hologram doesn't exist! &c(Details: &6"+ Arrays.toString(args)).send(sender);
+                                            new Text(plugin.prefix + " &7This hologram doesn't exist! &c(Details: &6"+ Arrays.toString(args)).send(sender);
                                         }
                                     } else {
-                                        new Text(sloverHologram.prefix+" &7Usage: &f/sh setline (name) (number) (text)&7!").send(sender);
+                                        new Text(plugin.prefix+" &7Usage: &f/sh setline (name) (number) (text)&7!").send(sender);
                                     }
                                 } else {
-                                    new Text(sloverHologram.prefix+" &7Usage: &f/sh setline (name) (number) (text)&7!").send(sender);
+                                    new Text(plugin.prefix+" &7Usage: &f/sh setline (name) (number) (text)&7!").send(sender);
                                 }
                             } else {
-                                new Text(sloverHologram.prefix+" &7Usage: &f/sh setline (name) (number) (text)&7!").send(sender);
+                                new Text(plugin.prefix+" &7Usage: &f/sh setline (name) (number) (text)&7!").send(sender);
                             }
                         }
                         if (args[0].equalsIgnoreCase("setdistance")) {
@@ -391,25 +386,25 @@ public class SloverHologramCommand implements CommandExecutor {
                                 try {
                                     double distance = Double.parseDouble(args[1]);
                                     if (distance > 0) {
-                                        sloverHologram.sloverConfig.set("hologram-space", distance);
-                                        new Text(sloverHologram.prefix + " &7Distance changed!").send(sender);
+                                        plugin.sloverConfig.set("hologram-space", distance);
+                                        new Text(plugin.prefix + " &7Distance changed!").send(sender);
                                     } else {
-                                        new Text(sloverHologram.prefix + " &7Use a number bigger than zero!").send(sender);
+                                        new Text(plugin.prefix + " &7Use a number bigger than zero!").send(sender);
                                     }
                                 } catch (NumberFormatException e) {
-                                    new Text(sloverHologram.prefix + " &7This is not a double!").send(sender);
+                                    new Text(plugin.prefix + " &7This is not a double!").send(sender);
                                 }
                             } else {
-                                new Text(sloverHologram.prefix+" &7Usage: &f/sh setdistance (double)&7!").send(sender);
+                                new Text(plugin.prefix+" &7Usage: &f/sh setdistance (double)&7!").send(sender);
                             }
                         }
                         if (args[0].equalsIgnoreCase("list")) {
-                            if (sloverHologram.hologramList.isEmpty()) {
-                                new Text(sloverHologram.prefix + " &7This list is empty!").send(sender);
+                            if (plugin.hologramList.isEmpty()) {
+                                new Text(plugin.prefix + " &7This list is empty!").send(sender);
                             } else {
-                                new Text(sloverHologram.prefix + " &7There is &a"+toFancyCost(sloverHologram.hologramList.size())
-                                        +" &7hologram"+(sloverHologram.hologramList.size() > 1 ? "s" : "")+"!").send(sender);
-                                for (Hologram hologram : sloverHologram.hologramList) {
+                                new Text(plugin.prefix + " &7There is &a"+toFancyCost(plugin.hologramList.size())
+                                        +" &7hologram"+(plugin.hologramList.size() > 1 ? "s" : "")+"!").send(sender);
+                                for (Hologram hologram : plugin.hologramList) {
                                     Location loc = hologram.getLocation();
                                     DecimalFormat f = new DecimalFormat("##.000");
                                     String x = f.format(loc.getX());

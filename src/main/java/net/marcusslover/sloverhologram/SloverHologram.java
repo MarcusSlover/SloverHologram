@@ -55,6 +55,7 @@ public final class SloverHologram extends JavaPlugin implements Listener {
         sloverHologram = this;
 
         hologramList = new ArrayList<>();
+
         hologramManager =  new HologramManager();
         hologramAPI = new SloverHologramAPI();
 
@@ -74,7 +75,7 @@ public final class SloverHologram extends JavaPlugin implements Listener {
         });
 
         //register command
-        getCommand("sloverhologram").setExecutor(new SloverHologramCommand(this));
+        getCommand("sloverhologram").setExecutor(new SloverHologramCommand());
 
         //events
         Bukkit.getPluginManager().registerEvents(new Events(this), this);
