@@ -204,14 +204,15 @@ public class Hologram {
      * A method that completely destroys the hologram.
      */
     public void destroy() {
-        entities.forEach((key, value) -> {
-            Player player = Bukkit.getPlayer(key);
-            if (player != null && player.isOnline()) {
-                destroyHologram(player);
-            }
-        });
+        try {
+            entities.forEach((key, value) -> {
+                Player player = Bukkit.getPlayer(key);
+                if (player != null) {
+                    destroyHologram(player);
+                }
+            });
+        } catch (Exception ignored) {}
 
-        entities.clear();
         if (isCustom()) {
             plugin.getAPI().getHologramMap().remove(name);
         } else {

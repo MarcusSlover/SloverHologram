@@ -52,14 +52,18 @@ public class Events implements Listener {
             @Override
             public void run() {
                 sloverHologram.hologramList.forEach(hologram -> {
-                    hologram.remove(player);
-                    if (!hologram.getEntities().containsKey(player.getUniqueId())) {
+                    if (hologram.getEntities().containsKey(player.getUniqueId())) {
+                        hologram.remove(player);
+                        hologram.show(player);
+                    } else {
                         hologram.show(player);
                     }
                 });
                 sloverHologram.getAPI().getHologramMap().forEach((name, hologram) -> {
-                    hologram.remove(player);
-                    if (!hologram.getEntities().containsKey(player.getUniqueId())) {
+                    if (hologram.getEntities().containsKey(player.getUniqueId())) {
+                        hologram.remove(player);
+                        hologram.show(player);
+                    } else {
                         hologram.show(player);
                     }
                 });

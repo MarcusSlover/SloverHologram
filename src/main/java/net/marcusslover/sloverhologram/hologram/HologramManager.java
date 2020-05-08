@@ -32,7 +32,7 @@ public class HologramManager implements HologramEditor {
         plugin.sloverHologramData.set("hologram-list", list);
         plugin.sloverHologramData.set("hologram-data."+name+".lines", lines);
         plugin.sloverHologramData.set("hologram-data."+name+".location", location);
-        plugin.hologramList.add(hologram);
+
         for (Player player : Bukkit.getOnlinePlayers()) {
             hologram.show(player);
         }

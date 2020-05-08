@@ -51,11 +51,8 @@ public class SloverHologramAPI {
         if (!exists(name)) {
             return;
         }
-
         Hologram hologram = hologramMap.get(name);
         hologram.destroy();
-
-        hologramMap.remove(name);
     }
 
     /**

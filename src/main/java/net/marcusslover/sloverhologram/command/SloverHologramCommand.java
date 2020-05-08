@@ -44,8 +44,16 @@ public class SloverHologramCommand implements CommandExecutor {
                         new Text("&f/sh near (int) &7displays hologram in certain radius").send(player);
                         new Text("&f/sh setdistance (double) &7sets the distance between holograms").send(player);
                         new Text("&f/sh list &7displays list of holograms").send(player);
+                        new Text("&f/sh debug &7displays some plugin informations").send(player);
                         new Text("&ePlugin created by MarcusSlover").send(player);
                     } else {
+                        if (args[0].equalsIgnoreCase("debug")) {
+                            new Text(sloverHologram.prefix+" &7Debug").send(player);
+                            new Text("&fManual holograms: &a"+sloverHologram.hologramList.size()).send(player);
+                            new Text("&fAPI holograms: &b"
+                                    +sloverHologram.getAPI().getHologramMap().size()).send(player);
+
+                        }
                         if (args[0].equalsIgnoreCase("create") || args[0].equalsIgnoreCase("c")) {
                             if (args.length >= 2 && args[1] != null) {
                                 if (args.length >= 3 && args[2] != null) {

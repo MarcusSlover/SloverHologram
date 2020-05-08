@@ -7,7 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="420f1667-6a22-41aa-8682-5c4c989e9b63" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/api/SloverHologramAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/api/SloverHologramAPI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/event/Events.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/event/Events.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/hologram/Hologram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/marcusslover/sloverhologram/hologram/Hologram.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +74,8 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="add_unversioned_files" value="true" />
@@ -154,7 +159,8 @@
       <workItem from="1588873111748" duration="310000" />
       <workItem from="1588874292158" duration="146000" />
       <workItem from="1588874610761" duration="694000" />
-      <workItem from="1588877052992" duration="6597000" />
+      <workItem from="1588877052992" duration="6647000" />
+      <workItem from="1588937432661" duration="1403000" />
     </task>
     <task id="LOCAL-00001" summary="Test">
       <created>1544559208073</created>
@@ -303,7 +309,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588883376527</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="* Updated idea and project version">
+      <created>1588883689929</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1588883689929</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TodoView">
@@ -349,7 +362,8 @@
     <MESSAGE value="* Fixed a critical bug in the API" />
     <MESSAGE value="* Fixed bugs" />
     <MESSAGE value="* Fixed many bugs&#10;* Improved code and optimized it&#10;+ Fresh and clean API methods&#10;+ New type of a hologram -&gt; Custom&#10;* Re-located classes and packages&#10;- Old and bad methods" />
-    <option name="LAST_COMMIT_MESSAGE" value="* Fixed many bugs&#10;* Improved code and optimized it&#10;+ Fresh and clean API methods&#10;+ New type of a hologram -&gt; Custom&#10;* Re-located classes and packages&#10;- Old and bad methods" />
+    <MESSAGE value="* Updated idea and project version" />
+    <option name="LAST_COMMIT_MESSAGE" value="* Updated idea and project version" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WindowStateProjectService">
@@ -361,10 +375,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="12" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1588880092043" />
-    <state x="571" y="12" key="CommitChangelistDialog2" timestamp="1588883372832">
+    <state x="571" y="12" key="CommitChangelistDialog2" timestamp="1588883688018">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="571" y="12" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1588883372832" />
+    <state x="571" y="12" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1588883688018" />
     <state x="289" y="129" key="DiffContextDialog" timestamp="1588855207733">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -377,10 +391,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="440" y="0" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1588883596308" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1588883384405">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1588883691423">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588883384405" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588883691423" />
     <state x="624" y="223" key="extract.method.dialog" timestamp="1588855144403">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
