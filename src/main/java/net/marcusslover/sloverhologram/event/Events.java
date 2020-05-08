@@ -63,8 +63,6 @@ public class Events implements Listener {
                     if (hologram.getEntities().containsKey(player.getUniqueId())) {
                         hologram.remove(player);
                         hologram.show(player);
-                    } else {
-                        hologram.show(player);
                     }
                 });
             }
