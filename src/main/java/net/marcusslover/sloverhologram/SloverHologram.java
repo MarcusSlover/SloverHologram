@@ -101,8 +101,11 @@ public final class SloverHologram extends JavaPlugin implements Listener {
         for (final String hologramName : this.getHologramNames()) {
 
             Location location = this.sloverHologramData.getLocation("hologram-data."+hologramName+".location");
-            List<String> lines = this.sloverHologramData.getList("hologram-data."+hologramName+".lines");
+            if (location == null) {
+                continue;
+            }
 
+            List<String> lines = this.sloverHologramData.getList("hologram-data."+hologramName+".lines");
             final Hologram hologram = new Hologram(hologramName, lines, location, false);
 
             if (Bukkit.getOnlinePlayers().size() > 0) {

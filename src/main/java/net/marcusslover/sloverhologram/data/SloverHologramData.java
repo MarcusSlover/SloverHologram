@@ -3,6 +3,7 @@ package net.marcusslover.sloverhologram.data;
 import net.marcusslover.sloverhologram.SloverHologram;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,12 @@ public class SloverHologramData extends Config {
             final float yaw = (float) getDouble(path+".yaw");
 
             final String world = getString(path+".world");
-            final Location loc = new Location(Bukkit.getWorld(world), x, y, z, yaw, pitch);
+            final World world1 = Bukkit.getWorld(world);
+            if (world1 == null) {
+                return null;
+            }
+
+            final Location loc = new Location(world1, x, y, z, yaw, pitch);
 
             loc.setPitch(pitch);
             loc.setYaw(yaw);
