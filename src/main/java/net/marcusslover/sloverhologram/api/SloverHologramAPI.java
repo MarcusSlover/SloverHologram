@@ -6,9 +6,7 @@ import net.marcusslover.sloverhologram.hologram.HologramManager;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This class allows you to create and delete custom holograms.
@@ -21,6 +19,28 @@ public class SloverHologramAPI {
     private final SloverHologram plugin = SloverHologram.getInstance();
     private final HologramManager hologramManager = plugin.getHologramManager();
     private final Map<String, Hologram> hologramMap = new HashMap<>();
+
+    public static final Collection<UUID> disabledUpdating = new ArrayList<>();
+
+    /**
+     * A method which disables hologram updates for a certain player.
+     * @param player the target
+     */
+    public void disableUpdating(Player player) {
+        if (disabledUpdating.contains(player.getUniqueId())) {
+            return;
+        }
+
+        disabledUpdating.add(player.getUniqueId());
+    }
+
+    /**
+     * A method which enabled the hologram updates again.
+     * @param player the target player
+     */
+    public void enableUpdating(Player player) {
+        disabledUpdating.remove(player.getUniqueId());
+    }
 
     /**
      * A method that creates a new hologram for a certain player.

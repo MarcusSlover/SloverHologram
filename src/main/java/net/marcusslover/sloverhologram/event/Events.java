@@ -1,6 +1,7 @@
 package net.marcusslover.sloverhologram.event;
 
 import net.marcusslover.sloverhologram.SloverHologram;
+import net.marcusslover.sloverhologram.api.SloverHologramAPI;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -48,6 +49,10 @@ public class Events implements Listener {
     }
 
     private void updateHolograms(final Player player) {
+        if (SloverHologramAPI.disabledUpdating.contains(player.getUniqueId())) {
+            return;
+        }
+
         new BukkitRunnable() {
             @Override
             public void run() {
