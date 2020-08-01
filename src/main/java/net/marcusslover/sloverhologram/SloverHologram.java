@@ -1,5 +1,7 @@
 package net.marcusslover.sloverhologram;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import net.marcusslover.sloverhologram.api.SloverHologramAPI;
 import net.marcusslover.sloverhologram.command.SloverHologramCommand;
 import net.marcusslover.sloverhologram.data.SloverConfig;
@@ -28,26 +30,18 @@ import java.util.function.Consumer;
  */
 public final class SloverHologram extends JavaPlugin implements Listener {
 
-    //prefix
-    public final String prefix = "&b&lSLOVER HOLOGRAM!";
+    public final String prefix = "&b&lSLOVER HOLOGRAM!";//prefix
     private final ExecutorService executorService = Executors.newCachedThreadPool();
+    private SloverHologramAPI hologramAPI; //the api of the plugin
 
-    //the api of the plugin
-    private SloverHologramAPI hologramAPI;
+    public Collection<Hologram> hologramList; //collection of all proper holograms
+    public SloverConfig sloverConfig; //config instance
+    public SloverHologramData sloverHologramData; //holograms data instance
 
-    //collection of all proper holograms
-    public Collection<Hologram> hologramList;
+    private HologramManager hologramManager; // hologram manager
+    private ProtocolManager protocolManager = null; // protocol manager
 
-    //config instance
-    public SloverConfig sloverConfig;
-    //holograms data instance
-    public SloverHologramData sloverHologramData;
-
-    //management class
-    private HologramManager hologramManager;
-
-    //instance of the main class
-    private static SloverHologram sloverHologram;
+    private static SloverHologram sloverHologram; //instance of the main class
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
@@ -55,12 +49,17 @@ public final class SloverHologram extends JavaPlugin implements Listener {
         sloverHologram = this;
 
         hologramList = new ArrayList<>();
-
         hologramManager =  new HologramManager();
         hologramAPI = new SloverHologramAPI();
 
         if (!this.getDataFolder().exists()) {
             this.getDataFolder().mkdirs();
+        }
+
+        // protocol support
+        if (Bukkit.getPluginManager().getPlugin("ProtocolLib") != null) {
+            this.protocolManager = ProtocolLibrary.getProtocolManager();
+            getLogger().info("Successfully hooked into ProtocolLib!");
         }
 
         this.loadFiles(s -> {
@@ -121,6 +120,10 @@ public final class SloverHologram extends JavaPlugin implements Listener {
         hologramList.forEach(hologram -> Bukkit.getOnlinePlayers().forEach(hologram::remove));
         hologramAPI.getHologramMap().forEach((uuid, hologram) -> Bukkit.getOnlinePlayers().forEach(hologram::remove));
 
+    }
+
+    public ProtocolManager getProtocolManager() {
+        return protocolManager;
     }
 
     /**

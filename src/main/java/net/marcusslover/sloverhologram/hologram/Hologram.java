@@ -1,6 +1,12 @@
 package net.marcusslover.sloverhologram.hologram;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.events.ListenerPriority;
+import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.events.PacketEvent;
 import net.marcusslover.sloverhologram.SloverHologram;
+import net.marcusslover.sloverhologram.event.HologramClickEvent;
 import net.minecraft.server.v1_12_R1.EntityArmorStand;
 import net.minecraft.server.v1_12_R1.PacketPlayOutEntityDestroy;
 import net.minecraft.server.v1_12_R1.PacketPlayOutSpawnEntityLiving;
@@ -15,11 +21,14 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 
+import static net.marcusslover.sloverhologram.event.HologramClickEvent.Action;
+
 @SuppressWarnings("WeakerAccess")
 public class Hologram {
     private final SloverHologram plugin = SloverHologram.getInstance();
 
     private final String name;
+    private final Hologram hologram;
     private List<String> lines;
     private Location location;
     private final Chunk chunk;
@@ -34,6 +43,8 @@ public class Hologram {
      * @param location location of the hologram
      */
     public Hologram(final String name, final List<String> lines, final Location location, final boolean custom) {
+        this.hologram = this;
+
         this.name = name;
         this.lines = lines;
         this.location = location;
@@ -44,6 +55,63 @@ public class Hologram {
             plugin.hologramList.add(this);
         } else {
             plugin.getAPI().getHologramMap().put(name, this);
+        }
+    }
+
+    /**
+     * A method which registers a packet adapters that detects
+     * whenever a certain player interacts with the hologram.
+     * To catch the results use {@link net.marcusslover.sloverhologram.event.HologramClickEvent}
+     */
+    public void registerListener() {
+        if (plugin.getProtocolManager() != null) {
+            plugin.getProtocolManager().addPacketListener(
+                new PacketAdapter(plugin, ListenerPriority.NORMAL, PacketType.Play.Client.USE_ENTITY) {
+                    @Override
+                    public void onPacketReceiving(PacketEvent event) {
+                        PacketContainer packetContainer = event.getPacket();
+                        // checking for the type just in case
+                        if (packetContainer.getType() == PacketType.Play.Client.USE_ENTITY) {
+                            Player player = event.getPlayer();
+                            int clickedEntity = packetContainer.getIntegers().read(0);
+                            int interactionType = packetContainer.getIntegers().read(1);
+
+                            // get entities
+                            List<EntityArmorStand> armorStands = new ArrayList<>();
+                            if (entities.containsKey(player.getUniqueId())) {
+                                armorStands = entities.get(player.getUniqueId());
+                            }
+
+                            // check if the entity belongs to this hologram set
+                            if (!armorStands.isEmpty()) {
+                                for (EntityArmorStand armorStand : armorStands) {
+                                    // check the ids
+                                    if (armorStand.getId() == clickedEntity) {
+                                        event.setCancelled(true);
+
+                                        // call the event sync
+                                        Bukkit.getScheduler().runTask(plugin, () -> {
+                                            Action action = Action.byId(interactionType);
+
+                                            // return if the action somwhow is null
+                                            if (action == null) {
+                                                return;
+                                            }
+
+                                            // call the event
+                                            HologramClickEvent hologramClickEvent = new HologramClickEvent(player, hologram, action);
+                                            Bukkit.getPluginManager().callEvent(hologramClickEvent);
+                                        });
+                                        break;
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                });
+        } else {
+            Bukkit.getLogger().warning("Tried registering a listener without ProtocolLib plugin installed, action denied!");
         }
     }
 

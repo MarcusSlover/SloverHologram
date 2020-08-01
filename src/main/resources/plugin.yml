@@ -2,6 +2,8 @@ name: SloverHologram
 version: ${project.version}
 main: net.marcusslover.sloverhologram.SloverHologram
 authors: [MarcusSlover]
+softdepend:
+  - ProtocolLib
 description: A simple hologram plugin with good api.
 
 commands:
