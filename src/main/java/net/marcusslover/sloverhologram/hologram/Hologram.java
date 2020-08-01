@@ -35,6 +35,7 @@ public class Hologram {
     private final boolean custom;
 
     private final Map<UUID, List<EntityArmorStand>> entities = new HashMap<>();
+    private PacketAdapter packetListener = null;
 
     /**
      * A method which creates a new hologram object
@@ -65,51 +66,51 @@ public class Hologram {
      */
     public void registerListener() {
         if (plugin.getProtocolManager() != null) {
-            plugin.getProtocolManager().addPacketListener(
-                new PacketAdapter(plugin, ListenerPriority.NORMAL, PacketType.Play.Client.USE_ENTITY) {
-                    @Override
-                    public void onPacketReceiving(PacketEvent event) {
-                        PacketContainer packetContainer = event.getPacket();
-                        // checking for the type just in case
-                        if (packetContainer.getType() == PacketType.Play.Client.USE_ENTITY) {
-                            Player player = event.getPlayer();
-                            int clickedEntity = packetContainer.getIntegers().read(0);
-                            int interactionType = packetContainer.getIntegers().read(1);
+            this.packetListener = new PacketAdapter(plugin, ListenerPriority.NORMAL, PacketType.Play.Client.USE_ENTITY) {
+                @Override
+                public void onPacketReceiving(PacketEvent event) {
+                    PacketContainer packetContainer = event.getPacket();
+                    // checking for the type just in case
+                    if (packetContainer.getType() == PacketType.Play.Client.USE_ENTITY) {
+                        Player player = event.getPlayer();
+                        int clickedEntity = packetContainer.getIntegers().read(0);
+                        int interactionType = packetContainer.getIntegers().read(1);
 
-                            // get entities
-                            List<EntityArmorStand> armorStands = new ArrayList<>();
-                            if (entities.containsKey(player.getUniqueId())) {
-                                armorStands = entities.get(player.getUniqueId());
-                            }
+                        // get entities
+                        List<EntityArmorStand> armorStands = new ArrayList<>();
+                        if (entities.containsKey(player.getUniqueId())) {
+                            armorStands = entities.get(player.getUniqueId());
+                        }
 
-                            // check if the entity belongs to this hologram set
-                            if (!armorStands.isEmpty()) {
-                                for (EntityArmorStand armorStand : armorStands) {
-                                    // check the ids
-                                    if (armorStand.getId() == clickedEntity) {
-                                        event.setCancelled(true);
+                        // check if the entity belongs to this hologram set
+                        if (!armorStands.isEmpty()) {
+                            for (EntityArmorStand armorStand : armorStands) {
+                                // check the ids
+                                if (armorStand.getId() == clickedEntity) {
+                                    event.setCancelled(true);
 
-                                        // call the event sync
-                                        Bukkit.getScheduler().runTask(plugin, () -> {
-                                            Action action = Action.byId(interactionType);
+                                    // call the event sync
+                                    Bukkit.getScheduler().runTask(plugin, () -> {
+                                        Action action = Action.byId(interactionType);
 
-                                            // return if the action somwhow is null
-                                            if (action == null) {
-                                                return;
-                                            }
+                                        // return if the action somwhow is null
+                                        if (action == null) {
+                                            return;
+                                        }
 
-                                            // call the event
-                                            HologramClickEvent hologramClickEvent = new HologramClickEvent(player, hologram, action);
-                                            Bukkit.getPluginManager().callEvent(hologramClickEvent);
-                                        });
-                                        break;
-                                    }
+                                        // call the event
+                                        HologramClickEvent hologramClickEvent = new HologramClickEvent(player, hologram, action);
+                                        Bukkit.getPluginManager().callEvent(hologramClickEvent);
+                                    });
+                                    break;
                                 }
                             }
-
                         }
+
                     }
-                });
+                }
+            };
+            plugin.getProtocolManager().addPacketListener(packetListener);
         } else {
             Bukkit.getLogger().warning("Tried registering a listener without ProtocolLib plugin installed, action denied!");
         }
@@ -205,6 +206,9 @@ public class Hologram {
      */
     public void remove(final Player player) {
         this.destroyHologram(player);
+        if (this.packetListener != null) {
+            plugin.getProtocolManager().removePacketListener(packetListener);
+        }
     }
 
     /**
