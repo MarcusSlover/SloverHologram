@@ -79,7 +79,8 @@ public class Hologram {
                     if (packetContainer.getType() == PacketType.Play.Client.USE_ENTITY) {
                         Player player = event.getPlayer();
                         int clickedEntity = packetContainer.getIntegers().read(0);
-                        EnumWrappers.EntityUseAction entityUseAction = packetContainer.getEntityUseActions().read(1);
+                        EnumWrappers.EntityUseAction entityUseAction = packetContainer
+                                .getEntityUseActions().read(0);
 
                         // get entities
                         List<EntityArmorStand> armorStands = new ArrayList<>();
