@@ -206,9 +206,6 @@ public class Hologram {
      */
     public void remove(final Player player) {
         this.destroyHologram(player);
-        if (this.packetListener != null) {
-            plugin.getProtocolManager().removePacketListener(packetListener);
-        }
     }
 
     /**
@@ -273,6 +270,25 @@ public class Hologram {
     }
 
     /**
+     * A method that gets rid of all hologram lines and clears them.
+     * Packets are being sent to destroy the armor stands.
+     */
+    public void killEntities() {
+        for (Map.Entry<UUID, List<EntityArmorStand>> set : entities.entrySet()) {
+            Player player = Bukkit.getPlayer(set.getKey());
+            if (player != null) {
+                if (player.isOnline()) {
+                    for (EntityArmorStand entityArmorStand : set.getValue()) {
+                        PacketPlayOutEntityDestroy packet = new PacketPlayOutEntityDestroy(entityArmorStand.getBukkitEntity().getEntityId());
+                        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+                    }
+                }
+            }
+        }
+        entities.clear();
+    }
+
+    /**
      * A method that completely destroys the hologram.
      */
     public void destroy() {
@@ -289,6 +305,10 @@ public class Hologram {
             plugin.getAPI().getHologramMap().remove(name);
         } else {
             plugin.hologramList.remove(this);
+        }
+
+        if (this.packetListener != null) {
+            plugin.getProtocolManager().removePacketListener(packetListener);
         }
     }
 
