@@ -43,6 +43,7 @@ public class HologramClickEvent extends PlayerEvent {
             this.id = id;
         }
 
+
         public int getId() {
             return id;
         }
@@ -50,6 +51,16 @@ public class HologramClickEvent extends PlayerEvent {
         public static Action byId(int interactionType) {
             for (Action value : Action.values()) {
                 if (value.getId() == interactionType) {
+                    return value;
+                }
+            }
+
+            return null;
+        }
+
+        public static Action byName(String interactionType) {
+            for (Action value : Action.values()) {
+                if (value.name().equalsIgnoreCase(interactionType)) {
                     return value;
                 }
             }

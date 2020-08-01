@@ -78,7 +78,7 @@ public class Hologram {
                     if (packetContainer.getType() == PacketType.Play.Client.USE_ENTITY) {
                         Player player = event.getPlayer();
                         int clickedEntity = packetContainer.getIntegers().read(0);
-                        int interactionType = packetContainer.getIntegers().read(1);
+                        String interactionType = packetContainer.getStrings().read(1);
 
                         // get entities
                         List<EntityArmorStand> armorStands = new ArrayList<>();
@@ -95,7 +95,7 @@ public class Hologram {
 
                                     // call the event sync
                                     Bukkit.getScheduler().runTask(plugin, () -> {
-                                        Action action = Action.byId(interactionType);
+                                        Action action = Action.byName(interactionType);
 
                                         // return if the action somwhow is null
                                         if (action == null) {
