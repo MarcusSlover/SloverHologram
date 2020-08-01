@@ -5,6 +5,7 @@ import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
+import com.comphenix.protocol.wrappers.EnumWrappers;
 import net.marcusslover.sloverhologram.SloverHologram;
 import net.marcusslover.sloverhologram.event.HologramClickEvent;
 import net.minecraft.server.v1_12_R1.EntityArmorStand;
@@ -78,7 +79,7 @@ public class Hologram {
                     if (packetContainer.getType() == PacketType.Play.Client.USE_ENTITY) {
                         Player player = event.getPlayer();
                         int clickedEntity = packetContainer.getIntegers().read(0);
-                        String interactionType = packetContainer.getStrings().read(1);
+                        EnumWrappers.EntityUseAction entityUseAction = packetContainer.getEntityUseActions().read(1);
 
                         // get entities
                         List<EntityArmorStand> armorStands = new ArrayList<>();
@@ -95,7 +96,7 @@ public class Hologram {
 
                                     // call the event sync
                                     Bukkit.getScheduler().runTask(plugin, () -> {
-                                        Action action = Action.byName(interactionType);
+                                        Action action = Action.byName(entityUseAction.name());
 
                                         // return if the action somwhow is null
                                         if (action == null) {
