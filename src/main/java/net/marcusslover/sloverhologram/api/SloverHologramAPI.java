@@ -42,12 +42,17 @@ public class SloverHologramAPI {
         disabledUpdating.remove(player.getUniqueId());
     }
 
+    public Hologram createHologram(String name, Player player, Location location, String... lines) {
+        return this.createHologram(name, false, player, location, lines);
+    }
+
     /**
      * A method that creates a new hologram for a certain player.
      * In order to show this hologram to other players you must
      * use the following method {@link #showExisting(Player, String)}.
      *
      * @param name name of the hologram
+     * @param isSmall small option for the size
      * @param player the target
      * @param location specific location
      * @param lines lines of the hologram
