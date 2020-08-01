@@ -26,7 +26,7 @@ public class HologramManager implements HologramEditor {
         }
 
         lines.add(value);
-        Hologram hologram = new Hologram(name, lines, location, false);
+        Hologram hologram = new Hologram(name, true, lines, location, false);
 
         list.add(name);
         plugin.sloverHologramData.set("hologram-list", list);

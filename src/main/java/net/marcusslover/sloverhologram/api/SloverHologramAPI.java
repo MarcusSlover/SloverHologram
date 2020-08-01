@@ -52,11 +52,11 @@ public class SloverHologramAPI {
      * @param location specific location
      * @param lines lines of the hologram
      */
-    public Hologram createHologram(String name, Player player, Location location, String... lines) {
+    public Hologram createHologram(String name, boolean isSmall, Player player, Location location, String... lines) {
        if (exists(name)) {
            return null;
        }
-       final Hologram hologram = new Hologram(name, Arrays.asList(lines), location, true);
+       final Hologram hologram = new Hologram(name, isSmall, Arrays.asList(lines), location, true);
        hologram.show(player);
 
        return hologram;

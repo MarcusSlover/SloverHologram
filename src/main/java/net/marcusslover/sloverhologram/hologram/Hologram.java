@@ -37,14 +37,18 @@ public class Hologram {
 
     private final Map<UUID, List<EntityArmorStand>> entities = new HashMap<>();
     private PacketAdapter packetListener = null;
+    private final boolean isSmall;
 
     /**
      * A method which creates a new hologram object
      * @param name name of the hologram
-     * @param lines lines of the hologram
-     * @param location location of the hologram
+     * @param isSmall option for the size
+     * @param lines lines with the text
+     * @param location location to appear at
+     * @param custom is created by api or not
      */
-    public Hologram(final String name, final List<String> lines, final Location location, final boolean custom) {
+    public Hologram(final String name, final boolean isSmall, final List<String> lines, final Location location, final boolean custom) {
+        this.isSmall = isSmall;
         this.hologram = this;
 
         this.name = name;
@@ -120,6 +124,15 @@ public class Hologram {
         } else {
             Bukkit.getLogger().warning("Tried registering a listener without ProtocolLib plugin installed, action denied!");
         }
+    }
+
+    /**
+     * A method that checks if this hologram uses small type of
+     * armor stands or not.
+     * @return true/false depending on the size option
+     */
+    public boolean isSmall() {
+        return isSmall;
     }
 
     /**
