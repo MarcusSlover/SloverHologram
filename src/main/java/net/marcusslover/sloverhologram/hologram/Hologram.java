@@ -342,7 +342,7 @@ public class Hologram {
         entityArmorStand.setSilent(true);
         entityArmorStand.setMarker(false);
         entityArmorStand.setNoGravity(true);
-        entityArmorStand.setSmall(true);
+        entityArmorStand.setSmall(this.isSmall);// is small option
         entityArmorStand.setInvisible(true);
         entityArmorStand.setCustomNameVisible(true);
         entityArmorStand.setCustomName(getColor(value));
