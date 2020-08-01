@@ -66,6 +66,10 @@ public class Hologram {
      */
     public void registerListener() {
         if (plugin.getProtocolManager() != null) {
+            if (packetListener != null) { // check if already registered
+                return;
+            }
+
             this.packetListener = new PacketAdapter(plugin, ListenerPriority.NORMAL, PacketType.Play.Client.USE_ENTITY) {
                 @Override
                 public void onPacketReceiving(PacketEvent event) {
