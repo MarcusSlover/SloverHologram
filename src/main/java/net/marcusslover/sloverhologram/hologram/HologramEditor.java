@@ -80,4 +80,22 @@ public interface HologramEditor {
      * @return distance in double
      */
     double space();
+
+    /**
+     * A method which checks if a certain hologram
+     * listens to player interactions through a packet adapter.
+     * @param name name of the hologram
+     * @return true if toggled, false if not
+     */
+    boolean adapts(final String name);
+
+    /**
+     * A method which toggles whether the hologram's interaction
+     * adapter should be enabled or not. It's for people
+     * who want to create in-game holograms and use the API to be
+     * able to handle the hologram interaction through their code.
+     * @param name the hologram name
+     * @param toggle true / false
+     */
+    void toggleAdapt(final String name, final boolean toggle);
 }

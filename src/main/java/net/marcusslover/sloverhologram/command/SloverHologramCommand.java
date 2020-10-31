@@ -37,6 +37,7 @@ public class SloverHologramCommand implements CommandExecutor {
                         new Text("&f/sh tp (name) &7teleports to hologram").send(player);
                         new Text("&f/sh move (name) &7moves hologram").send(player);
                         new Text("&f/sh near (int) &7displays hologram in certain radius").send(player);
+                        new Text("&f/sh adapt (name) &7toggle packet adapter for a hologram").send(player);
                         new Text("&f/sh setdistance (double) &7sets the distance between holograms").send(player);
                         new Text("&f/sh list &7displays list of holograms").send(player);
                         new Text("&f/sh debug &7displays some plugin information").send(player);
@@ -229,6 +230,29 @@ public class SloverHologramCommand implements CommandExecutor {
                                 }
                             } else {
                                 new Text(plugin.prefix+" &7Usage: &f/sh near (int)&7!").send(player);
+                            }
+                        }
+                        if (args[0].equalsIgnoreCase("adapt") || args[0].equalsIgnoreCase("packet")
+                                || args[0].equalsIgnoreCase("adapter")) {
+                            if (args.length >= 2 && args[1] != null) {
+
+                                if (this.hologramManager.exists(args[1])) {
+
+                                   if (this.hologramManager.adapts(args[1])) {
+                                       this.hologramManager.toggleAdapt(args[1], false);
+                                       new Text(plugin.prefix+" &7The hologram adapter was &cdisabled&7! " +
+                                               "The API can no longer listen to player interactions with this hologram!").send(player);
+                                   } else {
+                                       this.hologramManager.toggleAdapt(args[1], true);
+                                       new Text(plugin.prefix+" &7The hologram adapter was &aenabled&7!" +
+                                               " The API can now listen to player interactions with this hologram!").send(player);
+                                   }
+
+                                } else {
+                                    new Text(plugin.prefix+" &7This hologram doesn't exist!").send(player);
+                                }
+                            } else {
+                                new Text(plugin.prefix+" &7Usage: &f/sh adapt (name)&7!").send(player);
                             }
                         }
                         if (args[0].equalsIgnoreCase("setdistance")) {

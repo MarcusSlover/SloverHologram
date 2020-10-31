@@ -152,4 +152,25 @@ public class HologramManager implements HologramEditor {
         return plugin.sloverConfig.getDouble("hologram-space", 0.4d);
     }
 
+    @Override
+    public boolean adapts(String name) {
+        return false;
+    }
+
+    @Override
+    public void toggleAdapt(String name, boolean toggle) {
+        for (Hologram hologram : plugin.hologramList) {
+            if (hologram.getName().equalsIgnoreCase(name)) {
+
+                if (toggle) {
+                    hologram.registerListener();
+                } else {
+                    hologram.unregisterListener();
+                }
+
+                plugin.sloverHologramData.set("hologram-data."+name+".packetAdapter", toggle);
+            }
+        }
+    }
+
 }

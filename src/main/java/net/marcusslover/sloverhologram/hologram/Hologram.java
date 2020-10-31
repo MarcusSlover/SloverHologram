@@ -126,6 +126,15 @@ public class Hologram {
         }
     }
 
+    public void unregisterListener() {
+        if (plugin.getProtocolManager() != null) {
+            if (packetListener != null) { // check if registered
+                plugin.getProtocolManager().removePacketListener(packetListener);
+                packetListener = null;
+            }
+        }
+    }
+
     /**
      * A method that checks if this hologram uses small type of
      * armor stands or not.

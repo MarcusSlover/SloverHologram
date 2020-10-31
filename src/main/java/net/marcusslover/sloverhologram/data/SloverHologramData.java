@@ -29,11 +29,23 @@ public class SloverHologramData extends Config {
         this.save();
     }
 
+    public void set(final String path, final boolean toggle) {
+        this.config.set(path, toggle);
+        this.save();
+    }
+
     public double getDouble(final String path) {
         if (this.config.contains(path)) {
             return this.config.getDouble(path);
         }
         return 0;
+    }
+
+    public boolean getBoolean(final String path) {
+        if (this.config.contains(path)) {
+            return this.config.getBoolean(path);
+        }
+        return false;
     }
 
     public String getString(final String path) {
