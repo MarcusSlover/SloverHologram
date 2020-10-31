@@ -154,6 +154,11 @@ public class HologramManager implements HologramEditor {
 
     @Override
     public boolean adapts(String name) {
+        for (Hologram hologram : plugin.hologramList) {
+            if (hologram.getName().equalsIgnoreCase(name)) {
+                return plugin.sloverHologramData.getBoolean("hologram-data."+name+".packetAdapter");
+            }
+        }
         return false;
     }
 
