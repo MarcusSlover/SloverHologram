@@ -96,6 +96,26 @@ public class HologramManager implements HologramEditor {
         }
     }
 
+    public void setLines(final String name, final int i, final List<String> list) {
+        for (Hologram hologram : plugin.hologramList) {
+            if (hologram.getName().equalsIgnoreCase(name)) {
+
+                List<String> lines = hologram.getLines();
+                for (int j = 0, listSize = list.size(); j < listSize; j++) {
+                    String s = list.get(j);
+                    lines.set(j + i, s);
+                }
+                hologram.setLines(lines);
+
+                plugin.sloverHologramData.set("hologram-data."+name+".lines", lines);
+
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    hologram.show(player);
+                }
+            }
+        }
+    }
+
     @Override
     public void teleport(final String name, final Location location) {
         for (Hologram hologram : plugin.hologramList) {
