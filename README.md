@@ -1,5 +1,5 @@
 # SloverHologram
-A simple Spigot plugin which allows to create custom floating texts (commonly known as holograms).<br>
+A simple Spigot plugin that allows creating custom floating texts (commonly known as holograms)..<br>
 This plugin was designed to work on Minecraft verison: **1.12.2**
 
 # Preview
