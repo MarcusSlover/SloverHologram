@@ -23,25 +23,23 @@ import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
 /**
- * A plugin for holograms, based on packets (fake entities)
- * Note: Do not steal or public the code without a permission.
- *
+ * A plugin for simple holograms.
  * @author MarcusSlover
  */
 public final class SloverHologram extends JavaPlugin implements Listener {
 
-    public final String prefix = "&b&lSLOVER HOLOGRAM!";//prefix
+    public final String prefix = "&b&lSLOVER HOLOGRAM!"; // Prefix
     private final ExecutorService executorService = Executors.newCachedThreadPool();
-    private SloverHologramAPI hologramAPI; //the api of the plugin
+    private SloverHologramAPI hologramAPI; // API class
 
-    public Collection<Hologram> hologramList; //collection of all proper holograms
-    public SloverConfig sloverConfig; //config instance
-    public SloverHologramData sloverHologramData; //holograms data instance
+    public Collection<Hologram> hologramList; // Collection of all 'global' holograms
+    public SloverConfig sloverConfig; // Config instance
+    public SloverHologramData sloverHologramData; // Hologram Data instance
 
-    private HologramManager hologramManager; // hologram manager
-    private ProtocolManager protocolManager = null; // protocol manager
+    private HologramManager hologramManager; // Hologram Manager instance
+    private ProtocolManager protocolManager = null; // Protocol Manager instance
 
-    private static SloverHologram sloverHologram; //instance of the main class
+    private static SloverHologram sloverHologram; // Instance of the main class
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
@@ -56,14 +54,15 @@ public final class SloverHologram extends JavaPlugin implements Listener {
             this.getDataFolder().mkdirs();
         }
 
-        // protocol support
+        // Protocol support
         if (Bukkit.getPluginManager().getPlugin("ProtocolLib") != null) {
             this.protocolManager = ProtocolLibrary.getProtocolManager();
             getLogger().info("Successfully hooked into ProtocolLib!");
         }
 
+        // Load holograms from the config.
         this.loadFiles(s -> {
-            //show the holograms
+            // Spawn the holograms.
             new BukkitRunnable() {
 
                 @Override
@@ -73,10 +72,10 @@ public final class SloverHologram extends JavaPlugin implements Listener {
             }.runTaskLater(sloverHologram, 5L);
         });
 
-        //register command
+        // Register the command
         getCommand("sloverhologram").setExecutor(new SloverHologramCommand());
 
-        //events
+        // Register the events
         Bukkit.getPluginManager().registerEvents(new Events(this), this);
         getLogger().info("The plugin was successfully enabled!");
     }
@@ -132,8 +131,8 @@ public final class SloverHologram extends JavaPlugin implements Listener {
     }
 
     /**
-     * A method which returns list of holograms from file
-     * @return list of hologram
+     * Returns a list of holograms from the file.
+     * @return List of holograms.
      */
     @SuppressWarnings("unchecked")
     public List<String> getHologramNames() {
@@ -141,24 +140,24 @@ public final class SloverHologram extends JavaPlugin implements Listener {
     }
 
     /**
-     * A method which returns the {@link HologramManager} class.
-     * @return an instance of the {@link HologramManager} class
+     * Returns the HologramManager class.
+     * @return An instance of the HologramManager class.
      */
     public HologramManager getHologramManager() {
         return hologramManager;
     }
 
     /**
-     * A method which returns api class
-     * @return api class
+     * Returns the SloverHologramAPI class.
+     * @return An instance of the SloverHologramAPI class.
      */
     public SloverHologramAPI getAPI() {
         return hologramAPI;
     }
 
     /**
-     * A method which returns instance of the main class
-     * @return instance of the main class
+     * Returns the SloverHologram class.
+     * @return  An instance of the SloverHologram class.
      */
     public static SloverHologram getInstance() {
         return sloverHologram;
