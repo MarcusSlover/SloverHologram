@@ -10,9 +10,9 @@ import java.util.*;
 
 /**
  * This class allows you to create and delete custom holograms.
- * This type of hologram is a bit different than the actual one.
- * It's not stored in any files and each hologram created here is
- * displayed only to a certain player.
+ * This type of hologram is a bit different than the normal one.
+ * It's not stored in any files and each hologram that was created here is
+ * displayed only to certain players.
  */
 @SuppressWarnings("unused")
 public class SloverHologramAPI {
@@ -23,8 +23,8 @@ public class SloverHologramAPI {
     public static final Collection<UUID> disabledUpdating = new ArrayList<>();
 
     /**
-     * A method which disables hologram updates for a certain player.
-     * @param player the target
+     * Disables hologram updates.
+     * @param player The target.
      */
     public void disableUpdating(Player player) {
         if (disabledUpdating.contains(player.getUniqueId())) {
@@ -35,8 +35,8 @@ public class SloverHologramAPI {
     }
 
     /**
-     * A method which enabled the hologram updates again.
-     * @param player the target player
+     * Disables hologram updates.
+     * @param player The target.
      */
     public void enableUpdating(Player player) {
         disabledUpdating.remove(player.getUniqueId());
@@ -47,15 +47,15 @@ public class SloverHologramAPI {
     }
 
     /**
-     * A method that creates a new hologram for a certain player.
-     * In order to show this hologram to other players you must
-     * use the following method {@link #showExisting(Player, String)}.
+     * Creates a new hologram and shows it to a certain player.
+     * However, to display this hologram to other players you have to
+     * use the following method: {@link #showExisting(Player, String)}.
      *
-     * @param name name of the hologram
-     * @param isSmall small option for the size
-     * @param player the target
-     * @param location specific location
-     * @param lines lines of the hologram
+     * @param name Name of the hologram.
+     * @param isSmall Size of the hologram armor stands.
+     * @param player The target.
+     * @param location The location.
+     * @param lines Lines of the hologram.
      */
     public Hologram createHologram(String name, boolean isSmall, Player player, Location location, String... lines) {
        if (exists(name)) {
@@ -68,9 +68,11 @@ public class SloverHologramAPI {
     }
 
     /**
-     * A method that deletes a certain hologram by specifying a valid name.
-     * All players won't see this hologram after this action.
-     * @param name the name
+     * Deletes a certain hologram.
+     * The given hologram name must be valid.
+     * After this action, the hologram will dissapear to
+     * all players on the server.
+     * @param name The hologram name.
      */
     public void deleteHologram(String name) {
         if (!exists(name)) {
@@ -81,11 +83,11 @@ public class SloverHologramAPI {
     }
 
     /**
-     * A method that hides an existing hologram from a specific player.
-     * You have to prove a valid name of the hologram.
+     * Hides an existing hologram from a specific player.
+     * You have to prove a valid hologram name.
      *
-     * @param player the target
-     * @param name name of a hologram
+     * @param player The target.
+     * @param name The hologram name.
      */
     public void hideExisting(Player player, String name) {
         if (!exists(name)) {
@@ -97,11 +99,11 @@ public class SloverHologramAPI {
     }
 
     /**
-     * A method that shows an existing hologram to a specific player.
-     * You have to prove a valid name of the hologram.
+     * Shows an existing hologram to a specific player.
+     * You have to prove a valid hologram name.
      *
-     * @param player the target
-     * @param name name of a hologram
+     * @param player The target.
+     * @param name The hologram name.
      */
     public void showExisting(Player player, String name) {
         if (!exists(name)) {
@@ -109,33 +111,31 @@ public class SloverHologramAPI {
         }
 
         final Hologram hologram = hologramMap.get(name);
-        hologram.remove(player); //just in case
+        hologram.remove(player); // Remove just in case.
         hologram.show(player);
     }
 
     /**
-     * A method that checks if there is an existing hologram
-     * with specified name.
-     * @param name the name
-     * @return true if exists, false if not
+     * Checks if hologram with given name exists.
+     * @param name The hologram name.
+     * @return True if exists, false if doesn't.
      */
     public boolean exists(String name) {
         return hologramMap.containsKey(name);
     }
 
     /**
-     * A method that returns the main hologram manager that
-     * allows you edit and create actual holograms that save in the files.
-     * @return the main hologram manager
+     * Returns the main hologram manager that
+     * allows you edit holograms that are saved in the files.
+     * @return HologramManager class.
      */
     public HologramManager getHologramManager() {
         return hologramManager;
     }
 
     /**
-     * A method that returns the hologram map with all
-     * custom holograms.
-     * @return the map with all custom holograms
+     * Returns a map with all custom holograms.
+     * @return The map.
      */
     public Map<String, Hologram> getHologramMap() {
         return hologramMap;
