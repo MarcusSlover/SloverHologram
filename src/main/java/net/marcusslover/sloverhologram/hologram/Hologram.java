@@ -40,12 +40,12 @@ public class Hologram {
     private final boolean isSmall;
 
     /**
-     * A method which creates a new hologram object
-     * @param name name of the hologram
-     * @param isSmall option for the size
-     * @param lines lines with the text
-     * @param location location to appear at
-     * @param custom is created by api or not
+     * Creates a new hologram object.
+     * @param name The hologram name.
+     * @param isSmall The hologram size.
+     * @param lines The hologram lines.
+     * @param location The location for the hologram to appear at.
+     * @param custom If true the hologram is consiered to be custom, if not it's just a global hologram
      */
     public Hologram(final String name, final boolean isSmall, final List<String> lines, final Location location, final boolean custom) {
         this.isSmall = isSmall;
@@ -65,13 +65,13 @@ public class Hologram {
     }
 
     /**
-     * A method which registers a packet adapters that detects
-     * whenever a certain player interacts with the hologram.
+     * Registers a packet adapter which detects
+     * whenever players interact with the hologram.
      * To catch the results use {@link net.marcusslover.sloverhologram.event.HologramClickEvent}
      */
     public void registerListener() {
         if (plugin.getProtocolManager() != null) {
-            if (packetListener != null) { // check if already registered
+            if (packetListener != null) { // Check if already registered.
                 return;
             }
 
@@ -79,36 +79,36 @@ public class Hologram {
                 @Override
                 public void onPacketReceiving(PacketEvent event) {
                     PacketContainer packetContainer = event.getPacket();
-                    // checking for the type just in case
+                    // Checking for the type just in case.
                     if (packetContainer.getType() == PacketType.Play.Client.USE_ENTITY) {
                         Player player = event.getPlayer();
                         int clickedEntity = packetContainer.getIntegers().read(0);
                         EnumWrappers.EntityUseAction entityUseAction = packetContainer
                                 .getEntityUseActions().read(0);
 
-                        // get entities
+                        // Getting entities.
                         List<EntityArmorStand> armorStands = new ArrayList<>();
                         if (entities.containsKey(player.getUniqueId())) {
                             armorStands = entities.get(player.getUniqueId());
                         }
 
-                        // check if the entity belongs to this hologram set
+                        // Check if the entity belongs to this hologram set.
                         if (!armorStands.isEmpty()) {
                             for (EntityArmorStand armorStand : armorStands) {
-                                // check the ids
+                                // Check the ids.
                                 if (armorStand.getId() == clickedEntity) {
                                     event.setCancelled(true);
 
-                                    // call the event sync
+                                    // Call the event sync.
                                     Bukkit.getScheduler().runTask(plugin, () -> {
                                         Action action = Action.byName(entityUseAction.name());
 
-                                        // return if the action somwhow is null
+                                        // Return if the action is null.
                                         if (action == null) {
                                             return;
                                         }
 
-                                        // call the event
+                                        // Call the event.
                                         HologramClickEvent hologramClickEvent = new HologramClickEvent(player, hologram, action);
                                         Bukkit.getPluginManager().callEvent(hologramClickEvent);
                                     });
@@ -136,84 +136,83 @@ public class Hologram {
     }
 
     /**
-     * A method that checks if this hologram uses small type of
+     * Checks if this hologram uses small type of
      * armor stands or not.
-     * @return true/false depending on the size option
+     * @return True/false depending on the size option.
      */
     public boolean isSmall() {
         return isSmall;
     }
 
     /**
-     * A method which checks either the hologram is API-created
-     * or manually created in-game using the command.
-     * @return true or false
+     * Checks either the hologram is API-created
+     * or created manually in-game using a command.
+     * @return True or false.
      */
     public boolean isCustom() {
         return custom;
     }
 
     /**
-     * A method which returns chunk the hologram is in
-     * @return the chunk
+     * Returns a chunk where this hologram is located in.
+     * @return The chunk.
      */
     public Chunk getChunk() {
         return chunk;
     }
 
     /**
-     * A method which returns the location
-     * @return location of the hologram
+     * Returns locaiton of this hologram.
+     * @return This hologram's location.
      */
     public Location getLocation() {
         return this.location;
     }
 
     /**
-     * A method which sets location of hologram
-     * @param location new location
+     * Set location of this hologram.
+     * @param location New location to use.
      */
     public void setLocation(final Location location) {
         this.location = location;
     }
 
     /**
-     * A method which returns hologram line
-     * @param i number
-     * @return actual string line of the hologram
+     * Returns a hologram line by the given index.
+     * @param i Index from 0 to ...
+     * @return The line.
      */
     public String getLine(final int i) {
         return lines.get(i);
     }
 
     /**
-     * A method which returns lines of the hologram
-     * @return lines of the hologram
+     * Returns a list of this hologram lines.
+     * @return This hologram's lines.
      */
     public List<String> getLines() {
         return this.lines;
     }
 
     /**
-     * A method which returns name of the hologram
-     * @return name of the hologram
+     * Returns name of this hologram.
+     * @return This hologram's name.
      */
     public String getName() {
         return this.name;
     }
 
     /**
-     * A method which sets lines of the hologram
-     * @param stringList a new list of lines
+     * Sets lines of this hologram.
+     * @param stringList New lines.
      */
     public void setLines(final List<String> stringList) {
         this.lines = stringList;
     }
 
     /**
-     * A method which make the hologram appear
-     * to a certain player
-     * @param player the player
+     * Makes the hologram visible to a certain player.
+     * @param player The target.
      */
     public void show(final Player player) {
         if (this.location.getWorld() == null) {
@@ -228,18 +227,16 @@ public class Hologram {
     }
 
     /**
-     * A method which make the hologram disappear
-     * to a certain player
-     * @param player the player
+     * Makes the hologram not visible to a certain player.
+     * @param player The target.
      */
     public void remove(final Player player) {
         this.destroyHologram(player);
     }
 
     /**
-     * A method which generates the hologram
-     * and sends the packets to a certain player
-     * @param player the player packet will be send to
+     * Generates & spawns the hologram entities.
+     * @param player The target.
      */
     private void generateHologram(final Player player) {
         List<EntityArmorStand> toRemove = new ArrayList<>();
@@ -273,9 +270,9 @@ public class Hologram {
     }
 
     /**
-     * A method which destroys the hologram
-     * and sends the packets to a certain player
-     * @param player the player packet will be send to
+     * Fully destroys the hologram and makes it not visible
+     * to a certain player.
+     * @param player The target.
      */
     private void destroyHologram(final Player player) {
         if (!entities.containsKey(player.getUniqueId())) {
@@ -298,7 +295,7 @@ public class Hologram {
     }
 
     /**
-     * A method that gets rid of all hologram lines and clears them.
+     * Gets rid of all hologram lines and clears them.
      * Packets are being sent to destroy the armor stands.
      */
     public void killEntities() {
@@ -317,7 +314,7 @@ public class Hologram {
     }
 
     /**
-     * A method that completely destroys the hologram.
+     * Completely destroys the hologram.
      */
     public void destroy() {
         try {
@@ -341,8 +338,8 @@ public class Hologram {
     }
 
     /**
-     * A method with returns crafted armor stand
-     * @return crafted armor stand
+     * Returns a NMS armor stand entity.
+     * @return NMS armor stand.
      */
     private EntityArmorStand getHologramLine(final Location loc, final String value) {
         WorldServer worldServer = ((CraftWorld) this.location.getWorld()).getHandle();
@@ -361,17 +358,17 @@ public class Hologram {
     }
 
     /**
-     * A method which returns colored string
-     * @param string a normal string
-     * @return colored string
+     * Returns a colored string.
+     * @param string String to color.
+     * @return A colored string
      */
     protected String getColor(final String string) {
         return ChatColor.translateAlternateColorCodes('&', string);
     }
 
     /**
-     * A method which returns all armorstands of the hologram
-     * @return the map with entities
+     * Returns all entities that represent the lines of this hologram.
+     * @return Map with all entities.
      */
     public Map<UUID, List<EntityArmorStand>> getEntities() {
         return entities;
